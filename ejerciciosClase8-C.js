@@ -1,4 +1,5 @@
 //Versión de EARLY RETURNS de 'count smilies'(CAPTURA EJEMPLO).
+
 //Ejemplo Aitana High and Low. Mi captura no viene con su inicializacion de las variables "lowest" y "highest". La clave está en que ella inicializa ambas variables desde el valor en la primera posicion del array.
 
 /** Crear una función que, dados dos parámetros, name y age:
