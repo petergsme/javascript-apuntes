@@ -63,12 +63,10 @@ console.log(getCountdownShapeFromSeconds2(127400));
  * 3. Añade un parámetro a la función para que el usuario pueda elegir si quiere que salgan los días como horas.
  */
 
-//Hagamos con ternarios en el ultimo return y un parametro predeclarado como en what it does 2.
-
 const getCountdownShapeFromSeconds3 = (seconds, daysAsHours = false) => {
-  if (typeof seconds !== 'number' || isNaN(seconds) || seconds < 0) {
-    console.error(`Valor inválido: 'seconds' deben ser un número no negativo.`);
-    return;
+  if (typeof seconds !== 'number' || isNaN(seconds) || seconds < 0 || seconds === 0) {
+    console.error(`Valor inválido: 'seconds' deben ser un número no negativo y distinto de cero.`);
+    return; // Detiene la ejecución debido a parámetros inválidos, pero tecnicamente devuelve undefined con un console.log.
   }
 
   const result = {
@@ -78,12 +76,13 @@ const getCountdownShapeFromSeconds3 = (seconds, daysAsHours = false) => {
     seconds: 0,
   };
 
-  if (seconds === 0) {
-    return result;
-  }
+  const days = Math.floor(seconds / DAY_IN_SECONDS);
+  const hours = Math.floor((seconds % DAY_IN_SECONDS) / HOUR_IN_SECONDS);
 
-  result.days = daysAsHours ? Math.floor(seconds / DAY_IN_SECONDS) * 24 : Math.floor(seconds / DAY_IN_SECONDS);
-  result.hours = Math.floor((seconds % DAY_IN_SECONDS) / HOUR_IN_SECONDS);
+  const totalHours = daysAsHours ? days * 24 + hours : hours;
+
+  result.days = daysAsHours ? 0 : days;
+  result.hours = totalHours;
   result.minutes = Math.floor((seconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS);
   result.seconds = Math.floor(seconds % 60);
 
@@ -92,3 +91,4 @@ const getCountdownShapeFromSeconds3 = (seconds, daysAsHours = false) => {
 
 console.log(getCountdownShapeFromSeconds3(127400));
 console.log(getCountdownShapeFromSeconds3(127400, true));
+getCountdownShapeFromSeconds3(0); //Con un console.log veríamos el undefined del return que no devuelve nada.

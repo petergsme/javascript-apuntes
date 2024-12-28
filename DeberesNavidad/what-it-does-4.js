@@ -91,25 +91,48 @@ const getCountdownFormatted3 = (params) => {
     return value;
   };
 
-  const getFormattedPadOrEmpty = (value) => {
-    return value === undefined ? '' : zeroPad(value);
-  };
-
-  const formattedDays = getFormattedPadOrEmpty(days);
-  const formattedHours = getFormattedPadOrEmpty(hours);
-  const formattedMinutes = getFormattedPadOrEmpty(minutes);
-  const formattedSeconds = getFormattedPadOrEmpty(seconds);
+  const formattedDays = zeroPad(days);
+  const formattedHours = zeroPad(hours);
+  const formattedMinutes = zeroPad(minutes);
+  const formattedSeconds = zeroPad(seconds);
 
   return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
 console.log(getCountdownFormatted3({ days: 5, hours: 22, minutes: 35, seconds: 18 }));
-console.log(getCountdownFormatted3({ days: 5, hours: 22 }));
+console.log(getCountdownFormatted3({ days: 5, hours: 22, minutes: undefined }));
 console.log(getCountdownFormatted3({ days: 5, seconds: 22 }));
 console.log(getCountdownFormatted3({ hours: 5, seconds: 22 }));
 
 //El objeto desestructurado tiene valores por defecto en caso de que el valor que pasemos al parámetro no lo tenga. Esto hace innecesario necesitar los dos 0 en el ternario, ya que al ser 0 el valor por defecto < 10 zeroPad siempre le añadirá el otro cero. Sin embargo esto obliga a volver al boolean original de la condición del ternario porque si usamos el propio valor como condición el 0 por defecto será tomado como falsy y no se ejecutaría zeroPad.
 
+//Eliminamos getformattedPadOrEmpty porque si predeclaramos los valores a 0 en caso de no tener valor, nunca serán undefined.
+
 /**
  * 3. Añádele un parámetro para que los días vayan en horas.
  */
+
+const getCountdownFormatted4 = (params, daysAsHours = false) => {
+  const { days = 0, hours = 0, minutes = 0, seconds = 0 } = params;
+
+  const zeroPad = (value) => {
+    if (value < 10) {
+      return `0${value}`;
+    }
+    return value;
+  };
+
+  const totalhours = daysAsHours ? hours + days * 24 : zeroPad(hours);
+
+  const formattedDays = daysAsHours ? '00' : zeroPad(days);
+  const formattedHours = totalhours;
+  const formattedMinutes = zeroPad(minutes);
+  const formattedSeconds = zeroPad(seconds);
+
+  return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+};
+
+console.log(getCountdownFormatted4({ days: 5, hours: 22, minutes: 35, seconds: 18 }, true));
+console.log(getCountdownFormatted4({ days: 5, hours: 22 }));
+console.log(getCountdownFormatted4({ days: 5, seconds: 22 }, true));
+console.log(getCountdownFormatted4({ hours: 5, seconds: 22 }));
