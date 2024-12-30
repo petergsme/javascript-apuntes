@@ -20,7 +20,7 @@ const CONNECTED_NETWORKS_ACCOUNTS = {
 
 function isConnected(network) {
   if (network.toLowerCase() === 'tiktok') {
-    return CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal;
+    return CONNECTED_NETWORKS.tiktokBusiness || CONNECTED_NETWORKS.tiktokPersonal;
   }
   //Es así de sencillo lo de que compruebe si una u otra es true. Devolverá la primera de ellas. Si son falsas no devolverá nada.
   //
@@ -111,8 +111,10 @@ const networkNames = {
 
 const networkInformation2 = (networkList) => {
   return networkInformation(networkList).map((socialMedia) => {
-    socialMedia.network = networkNames[socialMedia.network];
-    return socialMedia;
+    return {
+      ...socialMedia,
+      network: networkNames[socialMedia.network],
+    };
   });
 };
 
@@ -123,13 +125,13 @@ console.log(networkInformation2(AVAILABLE_NETWORKS));
  * de las redes que están conectadas sin modificar la función 6.
  */
 
-const networkInformation3 = (previousArray) => {
-  return previousArray.filter((socialMedia) => {
+const networkInformation3 = (networkList) => {
+  return networkInformation2(networkList).filter((socialMedia) => {
     return socialMedia.isConnected;
   });
 };
 
-console.log(networkInformation3(networkInformation2(AVAILABLE_NETWORKS)));
+console.log(networkInformation3(AVAILABLE_NETWORKS));
 
 /**
  * 8. Algunas redes sociales no te dan el nombre correcto del usuario y te dan un número muy largo como cadena
