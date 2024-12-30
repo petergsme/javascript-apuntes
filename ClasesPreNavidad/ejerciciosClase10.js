@@ -1,4 +1,4 @@
-const AVAILABLE_NETWORKS = ["twitter", "facebook", "instagram", "tiktok", "youtube"];
+const AVAILABLE_NETWORKS = ['twitter', 'facebook', 'instagram', 'tiktok', 'youtube'];
 
 const CONNECTED_NETWORKS = {
   twitter: true,
@@ -10,16 +10,16 @@ const CONNECTED_NETWORKS = {
 };
 
 const CONNECTED_NETWORKS_ACCOUNTS = {
-  twitter: "232424124314",
+  twitter: '232424124314',
   facebook: undefined,
-  instagram: "gutufacio",
+  instagram: 'gutufacio',
   tiktokBusiness: undefined,
-  tiktokPersonal: "johny",
-  youtube: "robustio",
+  tiktokPersonal: 'johny',
+  youtube: 'robustio',
 };
 
 function isConnected(network) {
-  if (network.toLowerCase() === "tiktok") {
+  if (network.toLowerCase() === 'tiktok') {
     return CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal;
   }
   //Es así de sencillo lo de que compruebe si una u otra es true. Devolverá la primera de ellas. Si son falsas no devolverá nada.
@@ -27,8 +27,8 @@ function isConnected(network) {
   return CONNECTED_NETWORKS[network.toLowerCase()];
 }
 
-console.log(isConnected("TwiTTer"));
-console.log(isConnected("tIKtok"));
+console.log(isConnected('TwiTTer'));
+console.log(isConnected('tIKtok'));
 
 /**
  * 1. Intenta deducir qué hace el código de arriba y escríbelo aquí.
@@ -43,22 +43,22 @@ console.log(isConnected("tIKtok"));
 const getUserAccount = (socialMedia) => {
   const socialMediaNormalize = socialMedia.toLowerCase();
 
-  if (network.toLowerCase() === "tiktok") {
+  if (socialMedia.toLowerCase() === 'tiktok') {
     return CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal;
   }
 
   if (CONNECTED_NETWORKS[socialMediaNormalize]) {
     return !isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
-      ? "Usuario desconocido"
+      ? 'Usuario desconocido'
       : CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize];
     //isNaN intenta convertir a número, si lo logra dará false, si no, dará true, por eso aquí lo invertimos.
   }
   return `No hay una cuenta de usuario conectada para '${socialMedia}'`;
 };
 
-console.log(getUserAccount("twITTer"));
-console.log(getUserAccount("tikTok"));
-console.log(getUserAccount("epic games"));
+console.log(getUserAccount('twITTer'));
+console.log(getUserAccount('tikTok'));
+console.log(getUserAccount('epic games'));
 
 /**
  * 3. Crea una función que, dado un array de redes sociales, te devuelva otro array indicando la red,
@@ -69,14 +69,17 @@ console.log(getUserAccount("epic games"));
  */
 
 const networkInformation = (networkList) => {
-  const checkNetwork = networkList.map((socialMedia) => {
-    return {
+  return networkList.map((socialMedia) => {
+    const networkInfo = {
       network: socialMedia,
-      isConnected: CONNECTED_NETWORKS[socialMedia],
-      username: getUserAccount(socialMedia),
+      isConnected: isConnected(socialMedia),
     };
+
+    if (networkInfo.isConnected) {
+      networkInfo.username = getUserAccount(socialMedia);
+    }
+    return networkInfo;
   });
-  return checkNetwork;
 };
 
 console.log(networkInformation(AVAILABLE_NETWORKS));
@@ -94,11 +97,11 @@ console.log(networkInformation(AVAILABLE_NETWORKS));
  */
 
 const networkNames = {
-  twitter: "Twitter",
-  facebook: "Facebook",
-  instagram: "Instagram",
-  tiktok: "Tik Tok",
-  youtube: "YouTube",
+  twitter: 'X',
+  facebook: 'Facebook',
+  instagram: 'Instagram',
+  tiktok: 'Tik Tok',
+  youtube: 'YouTube',
 };
 
 /**
@@ -107,12 +110,10 @@ const networkNames = {
  */
 
 const networkInformation2 = (networkList) => {
-  const updatedNetworkInformation = networkInformation(networkList);
-
-  updatedNetworkInformation.forEach((socialMedia) => {
+  return networkInformation(networkList).map((socialMedia) => {
     socialMedia.network = networkNames[socialMedia.network];
+    return socialMedia;
   });
-  return updatedNetworkInformation;
 };
 
 console.log(networkInformation2(AVAILABLE_NETWORKS));
@@ -137,11 +138,11 @@ console.log(networkInformation3(networkInformation2(AVAILABLE_NETWORKS)));
  */
 
 const CONNECTED_NETWORKS_ACCOUNTS_2 = {
-  twitter: "232424124314",
+  twitter: '232424124314',
   facebook: undefined,
-  instagram: "gutufacio",
+  instagram: 'gutufacio',
   tikTok: undefined,
-  youtube: "robustio",
+  youtube: 'robustio',
 };
 //He metido el nuevo valor de twitter en el array original para poder probarlo con todas las demas funciones.
 
@@ -156,8 +157,8 @@ const getUserInfo = (socialMedia) => {
   return getUserAccount(socialMedia);
 };
 
-console.log(getUserInfo("twItter"));
-console.log(getUserInfo("facebOOK"));
+console.log(getUserInfo('twItter'));
+console.log(getUserInfo('facebOOK'));
 
 /**
  * 10. Modifica todas las funciones anteriores para que sean Arrow functions
