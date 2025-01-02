@@ -43,17 +43,20 @@ console.log(isConnected('tIKtok'));
 const getUserAccount = (socialMedia) => {
   const socialMediaNormalize = socialMedia.toLowerCase();
 
-  if (socialMedia.toLowerCase() === 'tiktok') {
-    return CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal;
+  if (socialMediaNormalize === 'tiktok') {
+    return !isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
+      ? CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal
+      : 'Usuario anónimo';
   }
 
   if (CONNECTED_NETWORKS[socialMediaNormalize]) {
     return !isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
-      ? 'Usuario desconocido'
+      ? 'Usuario anónimo'
       : CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize];
     //isNaN intenta convertir a número, si lo logra dará false, si no, dará true, por eso aquí lo invertimos.
   }
   return `No hay una cuenta de usuario conectada para '${socialMedia}'`;
+  p;
 };
 
 console.log(getUserAccount('twITTer'));
