@@ -89,9 +89,15 @@ shoppingCart2.forEach(function (product) {
   product.taxes = 0.1 * product.price;
 });
 
-//Es mejor práctica copiar un array antes que modificarlo como hemos hecho nosotros. Usaríamos map.
-
 console.log(shoppingCart2);
+
+const pepino = (shoppingcartlist) => {
+  return shoppingcartlist.map((product) => {
+    return { ...product, taxes: 0.1 * product.price };
+  });
+};
+
+console.log(pepino(shoppingCart2));
 
 /*
    5. Dado el carrito de la compra del ejercicio 1, implementa una función que permita eliminar una unidad de producto del carrito de la compra basándose en el nombre del producto. Por ejemplo, si la función se invoca con "Red wine", el array debe eliminar ese elemento de la lista porque solo hay 1, pero si se invoca con "Tiramisú", simplemente se restará uno a la propiedad quantity de ese elemento.
