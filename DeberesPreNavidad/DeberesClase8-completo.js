@@ -10,11 +10,11 @@
  */
 
 const shoppingList = [
-  { name: "botella de agua", quantity: 7, priceBeforeTaxes: 700 },
-  { name: "bolsa de palomitas", quantity: 2, priceBeforeTaxes: 255.5 },
-  { name: "kg de azucar", quantity: 1, priceBeforeTaxes: 1000 },
-  { name: "pan de hamburguesa", quantity: 728, priceBeforeTaxes: 928 },
-  { name: "kg de tofu ahumado", quantity: 28, priceBeforeTaxes: 2223 },
+  { name: 'botella de agua', quantity: 7, priceBeforeTaxes: 700 },
+  { name: 'bolsa de palomitas', quantity: 2, priceBeforeTaxes: 255.5 },
+  { name: 'kg de azucar', quantity: 1, priceBeforeTaxes: 1000 },
+  { name: 'pan de hamburguesa', quantity: 728, priceBeforeTaxes: 928 },
+  { name: 'kg de tofu ahumado', quantity: 28, priceBeforeTaxes: 2223 },
 ];
 
 //Atento a como escribimos los objetos de azucar y tofu, que son ligeramente diferentes.
@@ -36,30 +36,30 @@ const shoppingList = [
 
 const calculeTaxes = (country, state, shoppingCart) => {
   const validStates = [
-    "andalucía",
-    "aragón",
-    "asturias",
-    "baleares",
-    "canarias",
-    "cantabria",
-    "castilla-la mancha",
-    "castilla y león",
-    "cataluña",
-    "ceuta",
-    "comunidad valenciana",
-    "extremadura",
-    "galicia",
-    "la rioja",
-    "madrid",
-    "melilla",
-    "murcia",
-    "navarra",
-    "país vasco",
+    'andalucía',
+    'aragón',
+    'asturias',
+    'baleares',
+    'canarias',
+    'cantabria',
+    'castilla-la mancha',
+    'castilla y león',
+    'cataluña',
+    'ceuta',
+    'comunidad valenciana',
+    'extremadura',
+    'galicia',
+    'la rioja',
+    'madrid',
+    'melilla',
+    'murcia',
+    'navarra',
+    'país vasco',
   ];
 
-  const specialStates = ["ceuta", "melilla", "canarias"];
+  const specialStates = ['ceuta', 'melilla', 'canarias'];
 
-  if (country.toLowerCase() !== "spain" && country.toLowerCase() !== "españa") {
+  if (country.toLowerCase() !== 'spain' || country.toLowerCase() !== 'españa') {
     return `Esta herramienta únicamente calcula los impuestos de un carrito de la compra español.`;
   }
 
@@ -78,8 +78,8 @@ const calculeTaxes = (country, state, shoppingCart) => {
   });
 };
 
-console.log(calculeTaxes("españa", "andalucía", shoppingList));
-console.log(calculeTaxes("españa", "ceuta", shoppingList));
+console.log(calculeTaxes('españa', 'andalucía', shoppingList));
+console.log(calculeTaxes('españa', 'ceuta', shoppingList));
 
 //No es necesario almacenar el resultado del método .map() en una variable si tu intención es simplemente devolverlo. El método .map() genera un nuevo array sin modificar el original, por lo que puedes devolverlo directamente dentro de la función. Esa variable se considera una variable intermedia, y solo vale la pena guardarla si vas a hacer uso de ella de nuevo dentro de la función o por ser considerado una buena práctica.
 
@@ -116,9 +116,9 @@ const shoppingCartTaxes = shoppingCart.map((product) => ({
  */
 
 const discount = [
-  { code: "GUTUFACIO10", discount: 0.1, appliesAboveEur: 1000 },
-  { code: "ROBUSTIO20", discount: 0.2, appliesAboveEur: 20 },
-  { code: "LOSORNITORRINCOSMOLANUNHUEVO50", discount: 0.5, appliesAboveEur: 5000 },
+  { code: 'GUTUFACIO10', discount: 0.1, appliesAboveEur: 1000 },
+  { code: 'ROBUSTIO20', discount: 0.2, appliesAboveEur: 20 },
+  { code: 'LOSORNITORRINCOSMOLANUNHUEVO50', discount: 0.5, appliesAboveEur: 5000 },
 ];
 
 const applyCoupon = (coupon, shoppingCart) => {
@@ -127,7 +127,7 @@ const applyCoupon = (coupon, shoppingCart) => {
   });
 
   if (!isWhichCoupon) {
-    return "Tu cupón no es válido.";
+    return 'Tu cupón no es válido.';
   }
 
   let totalPriceBeforeTaxes = 0;
@@ -140,7 +140,7 @@ const applyCoupon = (coupon, shoppingCart) => {
     const discountedPrice =
       totalPriceBeforeTaxes >= isWhichCoupon.appliesAboveEur
         ? product.priceBeforeTaxes - product.priceBeforeTaxes * isWhichCoupon.discount
-        : "No hay descuento";
+        : 'No hay descuento';
 
     return {
       ...product,
@@ -151,11 +151,9 @@ const applyCoupon = (coupon, shoppingCart) => {
   });
 };
 
-//Estamos recalculando el impuesto con la nueva propiedad que hemos añadido.
+const arrayToTest1 = calculeTaxes('españa', 'andalucía', shoppingList);
 
-const arrayToTest1 = calculeTaxes("españa", "andalucía", shoppingList);
-
-console.log(applyCoupon("robusTIO20", arrayToTest1));
+console.log(applyCoupon('robusTIO20', arrayToTest1));
 
 /**
  * Al carrito de la compra de Gutufasio le vamos a aplicar ahora los gastos de envío.
@@ -172,46 +170,46 @@ console.log(applyCoupon("robusTIO20", arrayToTest1));
 //el proof de que no está vacio.
 
 const shippingCosts = (country, region) => {
-  isValidCountry = !country || typeof country !== "string";
+  invalidCountry = !country || typeof country !== 'string';
 
-  if (isValidCountry || typeof region !== "string" || !region) {
-    return isValidCountry
+  if (invalidCountry || typeof region !== 'string' || !region) {
+    return invalidCountry
       ? `El valor introducido para country no es válido.`
       : `El valor introducido para region no es válido.`;
   }
 
   let shippingPrice = 30;
 
-  const isSpain = country.toLowerCase() === "españa";
-  const isFrance = country.toLowerCase() === "francia";
+  const isSpain = country.toLowerCase() === 'españa';
+  const isFrance = country.toLowerCase() === 'francia';
 
   const isSpainRegion = (checkArray, checkElement) => {
     return checkArray.includes(checkElement.toLowerCase());
   };
 
   const validRegionSpain = [
-    "andalucía",
-    "aragón",
-    "asturias",
-    "baleares",
-    "canarias",
-    "cantabria",
-    "castilla-la mancha",
-    "castilla y león",
-    "cataluña",
-    "ceuta",
-    "comunidad valenciana",
-    "extremadura",
-    "galicia",
-    "la rioja",
-    "madrid",
-    "melilla",
-    "murcia",
-    "navarra",
-    "país vasco",
+    'andalucía',
+    'aragón',
+    'asturias',
+    'baleares',
+    'canarias',
+    'cantabria',
+    'castilla-la mancha',
+    'castilla y león',
+    'cataluña',
+    'ceuta',
+    'comunidad valenciana',
+    'extremadura',
+    'galicia',
+    'la rioja',
+    'madrid',
+    'melilla',
+    'murcia',
+    'navarra',
+    'país vasco',
   ];
 
-  const specialRegionSpain = ["ceuta", "melilla", "canarias"];
+  const specialRegionSpain = ['ceuta', 'melilla', 'canarias'];
 
   if (isSpain && isSpainRegion(specialRegionSpain, region)) {
     shippingPrice = 2;
@@ -219,22 +217,22 @@ const shippingCosts = (country, region) => {
     shippingPrice = 1.5;
   }
 
-  if (isFrance && region.toLowerCase() === "alsacia") {
+  if (isFrance && region.toLowerCase() === 'alsacia') {
     shippingPrice = 5;
   } else if (isFrance) {
     shippingPrice = 500;
   }
 
-  if (country.toLowerCase() === "andorra") {
+  if (country.toLowerCase() === 'andorra') {
     shippingPrice = 100;
   }
 
   return `Los gastos de envío para tu region tienen un coste de ${shippingPrice}€`;
 };
 
-console.log(shippingCosts("andorra", "corea del norte"));
-console.log(shippingCosts("", "corea del norte"));
-console.log(shippingCosts("francia", 5));
+console.log(shippingCosts('andorra', 'corea del norte'));
+console.log(shippingCosts('', 'corea del norte'));
+console.log(shippingCosts('francia', 5));
 
 /**
  * Bueno, Gutufasio se lo ha pensado mejor y si el carrito de la compra supera los 100€, los gastos de envío serán gratis
@@ -244,10 +242,10 @@ console.log(shippingCosts("francia", 5));
 //variante del ejercicio anterior.
 
 const updatedShippingCost = (country, region, shoppingCart) => {
-  isValidCountry = !country || typeof country !== "string";
+  invalidCountry = !country || typeof country !== 'string';
 
-  if (isValidCountry || typeof region !== "string" || !region) {
-    return isValidCountry
+  if (invalidCountry || typeof region !== 'string' || !region) {
+    return invalidCountry
       ? `El valor introducido para country no es válido.`
       : `El valor introducido para region no es válido.`;
   }
@@ -260,8 +258,8 @@ const updatedShippingCost = (country, region, shoppingCart) => {
 
   let shippingPrice = 30;
 
-  const isSpain = country.toLowerCase() === "españa";
-  const isFrance = country.toLowerCase() === "francia";
+  const isSpain = country.toLowerCase() === 'españa';
+  const isFrance = country.toLowerCase() === 'francia';
 
   if (totalPriceWithDiscount > 100 && !isFrance) {
     return `Los gastos de envío para tu región tienen un coste de 0€`;
@@ -272,28 +270,28 @@ const updatedShippingCost = (country, region, shoppingCart) => {
   };
 
   const validRegionSpain = [
-    "andalucía",
-    "aragón",
-    "asturias",
-    "baleares",
-    "canarias",
-    "cantabria",
-    "castilla-la mancha",
-    "castilla y león",
-    "cataluña",
-    "ceuta",
-    "comunidad valenciana",
-    "extremadura",
-    "galicia",
-    "la rioja",
-    "madrid",
-    "melilla",
-    "murcia",
-    "navarra",
-    "país vasco",
+    'andalucía',
+    'aragón',
+    'asturias',
+    'baleares',
+    'canarias',
+    'cantabria',
+    'castilla-la mancha',
+    'castilla y león',
+    'cataluña',
+    'ceuta',
+    'comunidad valenciana',
+    'extremadura',
+    'galicia',
+    'la rioja',
+    'madrid',
+    'melilla',
+    'murcia',
+    'navarra',
+    'país vasco',
   ];
 
-  const specialRegionSpain = ["ceuta", "melilla", "canarias"];
+  const specialRegionSpain = ['ceuta', 'melilla', 'canarias'];
 
   if (isSpain && isSpainRegion(specialRegionSpain, region)) {
     shippingPrice = 2;
@@ -301,21 +299,21 @@ const updatedShippingCost = (country, region, shoppingCart) => {
     shippingPrice = 1.5;
   }
 
-  if (isFrance && region.toLowerCase() === "alsacia") {
+  if (isFrance && region.toLowerCase() === 'alsacia') {
     shippingPrice = 5;
   } else if (isFrance) {
     shippingPrice = 500;
   }
 
-  if (country.toLowerCase() === "andorra") {
+  if (country.toLowerCase() === 'andorra') {
     shippingPrice = 100;
   }
 
   return `Los gastos de envío para tu region tienen un coste de ${shippingPrice}€`;
 };
 
-const arrayToTest2 = applyCoupon("robusTIO20", arrayToTest1);
+const arrayToTest2 = applyCoupon('robusTIO20', arrayToTest1);
 
-console.log(updatedShippingCost("españa", "ceuta", arrayToTest2));
+console.log(updatedShippingCost('españa', 'ceuta', arrayToTest2));
 
 //Ahora Josmi se pone a optimizar el codigo sacando fuera de las funciones los tramos que se repiten para crear nuevas funciones externas a las que llamar dentro de las funciones grandes para que hagan lo que ya hacian pero ocupando menos espacio. Es como lo que hemos hecho dentro de las funciones pero de manera mas global, aplicado a todas ellas a la vez.
