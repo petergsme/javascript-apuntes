@@ -1,8 +1,8 @@
 function order(words) {
   const sortedWords = [];
 
-  words.split(" ").forEach((word) => {
-    const number = word.split("").find((char) => {
+  words.split(' ').forEach((word) => {
+    const number = word.split('').find((char) => {
       return Number(char);
     });
     sortedWords[number - 1] = word;
@@ -12,5 +12,5 @@ function order(words) {
 
   //Mi fallo ha sido no entender que necesitaba ese número para luego meter el word esa posicion. Sabía que tenia que meter el word en esa posición pero no había en que PARA CADA UNO tienes que encontrar el número que contiene (da igual cual sea) y luego asignarle esa posición. De otro modo, falla.
 
-  return sortedWords.join(" ");
+  return sortedWords.join(' ');
 }
