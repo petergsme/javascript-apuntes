@@ -18,7 +18,7 @@ function greetings(name, age) {
     return `Hola me llamo ${name}`;
   }
 
-  return "No quiero decirte mi nombre, pringao";
+  return 'No quiero decirte mi nombre, pringao';
 }
 
 //Hecho con IFs exclusivamente.
@@ -33,8 +33,8 @@ const helloFriend = (name, age) => {
   return `No quiero decirte mi nombre, pringao.`;
 };
 
-console.log(helloFriend("pepe", 28));
-console.log(helloFriend("pepe"));
+console.log(helloFriend('pepe', 28));
+console.log(helloFriend('pepe', null));
 console.log(helloFriend());
 
 //Hecho con IFs y ternarios.
@@ -48,8 +48,8 @@ const helloFriend2 = (name, age) => {
     : `No quiero decirte mi nombre, pringao.`;
 };
 
-console.log(helloFriend2("pepe", 28));
-console.log(helloFriend2("pepe"));
+console.log(helloFriend2('pepe', 28));
+console.log(helloFriend2('pepe', null));
 console.log(helloFriend2());
 
 //Hecho exclusivamente con ternarios.
@@ -62,8 +62,8 @@ const helloFriend3 = (name, age) => {
   return name != undefined && age == undefined ? `Hola me llamo ${name}.` : firstCondition;
 };
 
-console.log(helloFriend3("pepe", 28));
-console.log(helloFriend3("pepe"));
+console.log(helloFriend3('pepe', 28));
+console.log(helloFriend3('pepe'));
 console.log(helloFriend3());
 
 //Al comparar un elemento a null y undefined a la vez, podrías retirar el triple igual y comparar únicamente el elemento con dos iguales a undefined. Esto es porque javascript trata null como un undefined a nivel de valor, aunque su tipo sea objeto y no undefined.
@@ -85,7 +85,7 @@ console.log(helloFriend3());
 
 const nameVariable = (numOfNames) => {
   const arrayOfRandom = [];
-  const isValidNumber = typeof numOfNames === "number";
+  const isValidNumber = typeof numOfNames === 'number';
 
   const intoArray = (array) => {
     if (numOfNames === 2 && isValidNumber) {
@@ -96,13 +96,13 @@ const nameVariable = (numOfNames) => {
     return `No has introducido un valor válido`;
   };
 
-  return typeof isValidNumber && numOfNames === 1 ? `ruperto${Math.random()}` : intoArray(arrayOfRandom);
+  return isValidNumber && numOfNames === 1 ? `ruperto${Math.random()}` : intoArray(arrayOfRandom);
 };
 
 console.log(nameVariable(1));
 console.log(nameVariable(2));
 console.log(nameVariable(4));
-console.log(nameVariable("pepe"));
+console.log(nameVariable('pepe'));
 
 //Manera mucho más sencilla de hacer el ejercicio anterior. No hace falta montar un array ahí. Usa las condiciones negativas/inversas:
 
@@ -114,7 +114,7 @@ function getRandomInt(min, max) {
 
 function getRandomVars(numVars) {
   if (numVars !== 1 && numVars !== 2) {
-    console.log("numVars debe estar entre 0 y 1");
+    console.log('numVars debe estar entre 0 y 1');
     return;
   }
 
@@ -126,7 +126,7 @@ function getRandomVars(numVars) {
 console.log(getRandomVars(1));
 console.log(getRandomVars(2));
 console.log(getRandomVars(4));
-console.log(getRandomVars("pepe"));
+console.log(getRandomVars('pepe'));
 
 //EMPEZAMOS CON BUCLES FOREACH.
 
@@ -190,10 +190,10 @@ const letterTimesNumber = (letter, number) => {
     arrayOfLetters.push(letter);
   }
 
-  return arrayOfLetters.join("");
+  return arrayOfLetters.join('');
 };
 
-console.log(letterTimesNumber("z", 1));
+console.log(letterTimesNumber('z', 3));
 
 /**
  * Escribe una función que dado un número, te devuelva una lista de nombres de película que te encantaría ver.
@@ -203,21 +203,21 @@ console.log(letterTimesNumber("z", 1));
  */
 const youShouldWatch = (number) => {
   const titlePart1 = [
-    "La venganza",
-    "El retorno",
-    "La comunidad",
-    "El reino",
-    "La abuela",
-    "Godofredo",
-    "Robustia",
-    "Pitifasio",
+    'La venganza',
+    'El retorno',
+    'La comunidad',
+    'El reino',
+    'La abuela',
+    'Godofredo',
+    'Robustia',
+    'Pitifasio',
   ];
   const titlePart2 = [
-    "de los ornitorrincos salvajes",
-    "de los cangrejos de rio",
-    "de los murcianos",
-    "de los paparajotes",
-    "con cucharón",
+    'de los ornitorrincos salvajes',
+    'de los cangrejos de rio',
+    'de los murcianos',
+    'de los paparajotes',
+    'con cucharón',
   ];
 
   const yourMovieList = [];
@@ -226,7 +226,7 @@ const youShouldWatch = (number) => {
     const temporaryContainer = [];
     temporaryContainer.push(titlePart1[Math.floor(Math.random() * (7 - 0) + 0)]);
     temporaryContainer.push(titlePart2[Math.ceil(Math.random() * (4 - 0) + 0)]);
-    yourMovieList.push(temporaryContainer.join(" "));
+    yourMovieList.push(temporaryContainer.join(' '));
   }
 
   return yourMovieList;
@@ -237,3 +237,5 @@ console.log(youShouldWatch(7));
 //tenemos que crear un for que tenga un array que se reincia dentro donde mete los dos trozos de titulo. luego hace un push de ese array con join al array titlepart2. Hara eso tantas veces como peliculas tenga que contener la lista que indique el number.
 
 //para que lo pille al azar tenemos que meter un math random que funcione para los parametros especificos de este ejercicio, puede ser creado como una funcion externa creo.
+
+//De aqui los ejercicios worth it son el primero y último.
