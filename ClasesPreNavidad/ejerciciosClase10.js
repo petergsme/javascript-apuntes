@@ -14,7 +14,7 @@ const CONNECTED_NETWORKS_ACCOUNTS = {
   facebook: undefined,
   instagram: 'gutufacio',
   tiktokBusiness: undefined,
-  tiktokPersonal: 'johny',
+  tiktokPersonal: 'jony',
   youtube: 'robustio',
 };
 
@@ -43,19 +43,18 @@ const getUserAccount = (socialMedia) => {
   const socialMediaNormalize = socialMedia.toLowerCase();
 
   if (socialMediaNormalize === 'tiktok') {
-    return !isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
+    return isNaN(CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness) && isNaN(CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal)
       ? CONNECTED_NETWORKS_ACCOUNTS.tiktokBusiness || CONNECTED_NETWORKS_ACCOUNTS.tiktokPersonal
       : 'Usuario anónimo';
   }
 
   if (CONNECTED_NETWORKS[socialMediaNormalize]) {
-    return !isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
-      ? 'Usuario anónimo'
-      : CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize];
-    //isNaN intenta convertir a número, si lo logra dará false, si no, dará true, por eso aquí lo invertimos.
+    return isNaN(CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize])
+      ? CONNECTED_NETWORKS_ACCOUNTS[socialMediaNormalize]
+      : 'Usuario anónimo';
+    //isNaN() intenta convertir a número para comprobar si el valor es o no un NotaNumber. Si logra convertirlo, devuelve false, porque SÍ SERÍA UN NÚMERO. Cuando no logra convertirlo, determina que debe ser algo diferente y devuelve true.
   }
   return `No hay una cuenta de usuario conectada para '${socialMedia}'`;
-  p;
 };
 
 console.log(getUserAccount('twITTer'));
@@ -148,9 +147,9 @@ const CONNECTED_NETWORKS_ACCOUNTS_2 = {
   tikTok: undefined,
   youtube: 'robustio',
 };
-//He metido el nuevo valor de twitter en el array original para poder probarlo con todas las demas funciones.
+//He metido el nuevo valor de twitter en el array original para poder probarlo con todas las demás funciones.
 
-/**
+/*
  * 9. Crea una función a la que le vamos a pasar un único parámetro, la red social. Usando alguna de las
  * funciones que has creado anteriormente y una de las variables definidas (deduce cual), debe devolver
  * el nombre del usuario en esa red social si tenemos su información, o 'Nunca has conectado tu cuenta'

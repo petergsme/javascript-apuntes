@@ -104,9 +104,7 @@ console.log(getCountdownFormatted3({ days: 5, hours: 22, minutes: undefined }));
 console.log(getCountdownFormatted3({ days: 5, seconds: 22 }));
 console.log(getCountdownFormatted3({ hours: 5, seconds: 22 }));
 
-//El objeto desestructurado tiene valores por defecto en caso de que el valor que pasemos al parámetro no lo tenga. Esto hace innecesario necesitar los dos 0 en el ternario, ya que al ser 0 el valor por defecto < 10 zeroPad siempre le añadirá el otro cero. Sin embargo esto obliga a volver al boolean original de la condición del ternario porque si usamos el propio valor como condición el 0 por defecto será tomado como falsy y no se ejecutaría zeroPad.
-
-//Eliminamos getformattedPadOrEmpty porque si predeclaramos los valores a 0 en caso de no tener valor, nunca serán undefined.
+//El objeto desestructurado tiene valores por defecto en caso de que el valor que pasemos al parámetro no lo tenga. Esto hace innecesario necesitar los dos 0 en el ternario, ya que al ser 0 el valor por defecto < 10 zeroPad siempre le añadirá el otro cero. Sin embargo esto obligaría a volver al boolean original de la condición del ternario porque si usamos el propio valor como condición el 0 por defecto será tomado como falsy y no se ejecutaría zeroPad. Peeero, eliminamos getformattedPadOrEmpty porque si predeclaramos los valores a 0 en caso de no tener valor, nunca serán undefined.
 
 /**
  * 3. Añádele un parámetro para que los días vayan en horas.

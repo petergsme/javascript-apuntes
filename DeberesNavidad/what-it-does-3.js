@@ -64,7 +64,7 @@ console.log(getCountdownShapeFromSeconds2(127400));
  */
 
 const getCountdownShapeFromSeconds3 = (seconds, daysAsHours = false) => {
-  if (typeof seconds !== 'number' || isNaN(seconds) || seconds < 0 || seconds === 0) {
+  if (typeof seconds !== 'number' || seconds <= 0) {
     console.error(`Valor inválido: 'seconds' deben ser un número no negativo y distinto de cero.`);
     return; // Detiene la ejecución debido a parámetros inválidos, pero tecnicamente devuelve undefined con un console.log.
   }

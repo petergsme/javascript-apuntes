@@ -429,11 +429,13 @@ function queueTime(customers, n) {
 .unshift
 .splice(0, 2) - 0 es el índice desde el que debe borrar, 2 el número de elementos a borrar.
 .slice(3, -5) - extraerá desde el carácter en la posición 3 hasta el que se encuentra 5 posiciones antes del final.
+.subString(0, 10) - excluyé el último carácter.
 
 String(x)
 Number(x)
 
 .indexOf() - Sorprendentemente útil para cambiar partes específicas de cosas (KATA SUPERMARKET QUEUE).
+.lastIndexOf()
 .charAt()
 
 .length
@@ -454,7 +456,7 @@ Array.isArray()
 
 /*En resumen, si te encuentras atascado con un ejercicio que te supera:
 
--Encuentra la manera sencilla de afrontarlo. Dale vueltas a de qué manera funciona el problema que debes resolver, a veces son más fáciles de lo que pensamos y escribimos código innecesario.
+-Encuentra la manera sencilla de afrontarlo. Dale vueltas a de qué manera funciona el problema que debes resolver, a veces son más fáciles de lo que pensamos y escribimos código innecesario (SUPERMARKET QUEUE original vs bueno, WHAT-IT-DOES-3 redundancia división minutos)
 
 -Elabora un plan que establezca qué ES LO QUE BUSCAS.
 
