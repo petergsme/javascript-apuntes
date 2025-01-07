@@ -23,7 +23,6 @@ function isConnected(network) {
     return CONNECTED_NETWORKS.tiktokBusiness || CONNECTED_NETWORKS.tiktokPersonal;
   }
   //Es así de sencillo lo de que compruebe si una u otra es true. Devolverá la primera de ellas. Si son falsas no devolverá nada.
-  //
   return CONNECTED_NETWORKS[network.toLowerCase()];
 }
 
