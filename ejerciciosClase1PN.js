@@ -123,7 +123,7 @@ const timePassed = (fromDate, disableOutput = {}) => {
   const { days = true, hours = true, minutes = true, seconds = true } = disableOutput;
 
   const dateNow = new Date();
-  const timeBetweenThenAndNow = Math.abs(fromDate.getTime() - dateNow.getTime());
+  const timeBetweenThenAndNow = dateNow.getTime() - fromDate.getTime();
 
   if (fromDate > dateNow) {
     return 'Esa fecha no ha llegado aún.';
@@ -178,7 +178,7 @@ const timeUntil = (toDate, disableOutput = {}) => {
   const { days = true, hours = true, minutes = true, seconds = true } = disableOutput;
 
   const dateNow = new Date();
-  const timeBetweenThenAndNow = Math.abs(toDate.getTime() - dateNow.getTime());
+  const timeBetweenThenAndNow = toDate.getTime() - dateNow.getTime();
 
   if (toDate < dateNow) {
     return 'Esa fecha ya llegó, y se fue.';
