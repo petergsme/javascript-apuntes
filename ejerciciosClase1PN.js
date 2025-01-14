@@ -127,18 +127,17 @@ const timePassed = (fromDate, disableOutput = {}) => {
 
   const { days = true, hours = true, minutes = true, seconds = true } = disableOutput;
 
-  const timeBetweenThenAndNow = Date.now() - fromDate.getTime();
+  const dateNow = new Date();
+  const timeBetweenThenAndNow = Math.abs(fromDate.getTime() - dateNow.getTime());
 
-  const day = days ? Math.floor(timeBetweenThenAndNow / DAYS_IN_MILLISECONDS) : 0;
-  let leftTime = days ? timeBetweenThenAndNow % DAYS_IN_MILLISECONDS : timeBetweenThenAndNow;
+  if (fromDate > dateNow) {
+    return "Esa fecha no ha llegado aún.";
+  }
 
-  const hour = hours ? Math.floor(leftTime / HOURS_IN_MILLISECONDS) : 0;
-  leftTime = hours ? leftTime % HOURS_IN_MILLISECONDS : leftTime;
-
-  const min = minutes ? Math.floor(leftTime / MINUTES_IN_MILLISECONDS) : 0;
-  leftTime = minutes ? leftTime % HOURS_IN_MILLISECONDS : leftTime;
-
-  const sec = seconds ? Math.floor(leftTime / SECONDS_IN_MILLISECONDS) : 0;
+  const day = Math.floor(timeBetweenThenAndNow / DAYS_IN_MILLISECONDS);
+  const hour = Math.floor((timeBetweenThenAndNow % DAYS_IN_MILLISECONDS) / HOURS_IN_MILLISECONDS);
+  const min = Math.floor((timeBetweenThenAndNow % HOURS_IN_MILLISECONDS) / MINUTES_IN_MILLISECONDS);
+  const sec = Math.floor((timeBetweenThenAndNow / SECONDS_IN_MILLISECONDS) % 60);
 
   const dayText = days && timeBetweenThenAndNow >= DAYS_IN_MILLISECONDS ? ` ${day} días,` : "";
   const hourText = hours && timeBetweenThenAndNow >= HOURS_IN_MILLISECONDS ? ` ${hour} horas,` : "";
@@ -202,7 +201,7 @@ const timeUntil = (toDate, disableOutput = {}) => {
   const { days = true, hours = true, minutes = true, seconds = true } = disableOutput;
 
   const dateNow = new Date();
-  const timeBetweenThenAndNow = Math.abs(toDate.getTime() - dateNow.getTime());
+  const timeBetweenThenAndNow = toDate.getTime() - dateNow.getTime();
 
   if (toDate < dateNow) {
     return "Esa fecha ya llegó, y se fue.";
