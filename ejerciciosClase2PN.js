@@ -10,8 +10,8 @@
  *
  */
 
-const randomNumber = (firstNumber, lastNumber) => {
-  return Math.round(Math.random() * (lastNumber - firstNumber) + firstNumber);
+const randomNumber = (min, max) => {
+  return Math.round(Math.random() * (max - min) + min);
 };
 
 const getRandomTaskArray = (number) => {
