@@ -16,7 +16,7 @@ function renderPerricoArray() {
   <button>Preciosísimo</button> <button>Feísisimo</button>
 </div>`;
 
-    dogList.innerHTML += htmltoAdd; //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior separado por un espacio.
+    dogList.innerHTML += htmltoAdd; //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
   });
 }
 
@@ -36,13 +36,13 @@ const addFivePerricos = async () => {
   renderPerricoArray();
 };
 
-document.querySelector('#add-1-perrico').addEventListener('click', function () {
+document.querySelector('#add-1-perrico').addEventListener('click', () => {
   addPerrico();
 });
 
 document.querySelector('#add-5-perrico').addEventListener('click', function () {
   addFivePerricos();
-}); //La he hecho así en vez de usar 5 veces la otra, porque así carga los 5 perritos al mismo tiempo, del otro modo los sacaba aparecían de uno en uno.
+}); //La he hecho así en vez de usar 5 veces la otra, porque así carga los 5 perritos al mismo tiempo, del otro modo los sacaba aparecían de uno en uno. Según Josmi esto tecnicamente es peor, porque en lugares con mala conexión, veran los recuadros pero no verán los perros hast que terminen de cargar.
 
 //La función/método .addEventListener incluye un primer parámetro en referencia a lo que está escuchando. Se trata de un string específico. Hay animation, clipboard, composition, focus, fullscreen, keyboard, mouse, pointer, scroll, touch y transition events. Cada uno presenta diferentes strings de evento que podrían ser escuchados con un addEventListener para actuar al ocurrir su ejecución. (hay mas events que he dejado fuera, se encuentran en esta web --> https://developer.mozilla.org/en-US/docs/Web/Events).
 
@@ -56,5 +56,5 @@ document.querySelector('.card > button').addEventListener('click', function () {
     button.style.visibility = 'hidden';
   });
 
-  document.querySelector('.card > p').innerHTML = `<p>1❤️ 🤮</p>`;
+  document.querySelector('.card > p').innerHTML = `<p>1 ❤️ 🤮</p>`;
 });
