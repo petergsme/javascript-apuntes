@@ -4,8 +4,13 @@ const perricosArray = [
 ];
 //'perricosArray' es el contenedor de las imágenes de los dos primeros perricos que se pintan en pantalla por defecto al cargar la página.
 
-const giveDogVotesListeners = () => {
-  document.querySelectorAll('#dog-list .card').forEach((card) => {
+const brokenDogVotesListeners = () => {
+  const cardsWithoutListeners = Array.from(document.querySelectorAll('.card')).filter((dogCard) => {
+    console.log(dogCard.querySelector('p').innerHTML.length);
+    return dogCard.querySelector('p').innerHTML.length === 5;
+  });
+
+  cardsWithoutListeners.forEach((card) => {
     let positiveButton = card.querySelector('.vote-nice');
     let negativeButton = card.querySelector('.vote-ugly');
 
@@ -29,6 +34,34 @@ const giveDogVotesListeners = () => {
         negativeButton.style.visibility = 'hidden';
       }
     });
+  }); //Se me fue de las manos. Aun filtrando las tarjetas para seleccionar las que no tienen event listeners, el haber declarado positiveVote y negativeVote de manera local hace que internamente se reinicien para las tarjetas a las que no se añade un nuevo event listener lo que provoca que se rompan.
+};
+
+const hideButton = (count, button) => {
+  if (count >= 5) {
+    button.style.visibility = 'hidden';
+  }
+};
+
+const giveDogVotesListeners = () => {
+  document.querySelectorAll('.vote-nice').forEach((button) => {
+    button.addEventListener('click', () => {
+      const parrafo = button.previousElementSibling; //Desde el botón seleccionamos su hermano anterior, el párrafo con contadores.
+      const likeCountNode = parrafo.querySelector('.like-count'); //Guardamos la posición del contador positivo en una variable.
+      likeCountNode.innerText = Number(likeCountNode.innerText) + 1; //Convertimos a número su interior y sumamos 1.
+
+      hideButton(likeCountNode.innerText, button);
+    });
+  });
+
+  document.querySelectorAll('.vote-ugly').forEach((button) => {
+    button.addEventListener('click', () => {
+      const parrafo = button.previousElementSibling.previousElementSibling;
+      const dislikeCountNode = parrafo.querySelector('.dislike-count');
+      dislikeCountNode.innerText = Number(dislikeCountNode.innerText) + 1;
+
+      hideButton(dislikeCountNode.innerText, button);
+    });
   });
 };
 
@@ -37,15 +70,13 @@ function renderPerrico(image) {
   const htmltoAdd = `<div class="card">
   <img src="${image}" alt="Perro" />
   <br />
-  <p>❤️ 🤮</p>
+  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
   <button class="vote-nice">Preciosísimo</button> <button class="vote-ugly">Feísisimo</button>
 </div>`;
   dogList.innerHTML += htmltoAdd; //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
 }
 
 function renderPerricoArray() {
-  const dogList = document.querySelector('#dog-list');
-
   //Aquí solía estar "dogList.innerHTML = '';", limpiaba el HTML cuando la manera de renderizar los perricos dependía del array, ahora parece innecesario, así que lo he eliminado.
 
   perricosArray.forEach((dogImage) => {
@@ -86,6 +117,36 @@ const addFivePerricosEficiente = async () => {
   giveDogVotesListeners();
 };
 
+const addPerricoStart = async () => {
+  const perricoImg = await getRandomDogImage();
+
+  const dogList = document.querySelector('#dog-list');
+  const htmltoAdd = `<div class="card">
+  <img src="${perricoImg}" alt="Perro" />
+  <br />
+  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
+  <button class="vote-nice">Preciosísimo</button> <button class="vote-ugly">Feísisimo</button>
+</div>`;
+
+  dogList.innerHTML = htmltoAdd + dogList.innerHTML;
+
+  giveDogVotesListeners();
+};
+
+const hideUglyDoggies = () => {
+  document.querySelectorAll('.dislike-count').forEach((count) => {
+    if (count.innerHTML > 0) {
+      count.parentElement.parentElement.style.display = 'none';
+    }
+  });
+};
+
+const showAllDoggies = () => {
+  document.querySelectorAll('.card').forEach((dogCard) => {
+    dogCard.style.display = ''; //"set display to an empty string - this will allow the row to use its default display value and so works in all browsers"
+  });
+};
+
 //Según Josmi cargar todos los perritos al mismo tiempo sería peor, porque en lugares con mala conexión, verán los recuadros pero no verán los perros hast que terminen de cargar.
 
 document.querySelector('#add-1-perrico').addEventListener('click', () => {
@@ -95,6 +156,20 @@ document.querySelector('#add-1-perrico').addEventListener('click', () => {
 document.querySelector('#add-5-perrico').addEventListener('click', function () {
   addFivePerricosEficiente();
 });
+
+document.querySelector('#add-perrico-start').addEventListener('click', function () {
+  addPerricoStart();
+});
+
+document.querySelector('#hide-uglies').addEventListener('click', function () {
+  hideUglyDoggies();
+});
+
+document.querySelector('#show-all').addEventListener('click', function () {
+  showAllDoggies();
+});
+
+//Para los perritos positivos tendriamos que crear el boton, luego darle aqui un event listener para que ejecutase su funcion y sufuncion seria ocultar los perritos no positivos. para eso necesitariamos acceder a cada uno de los botones de dislike y comprobar que son mayores que 0, si lo son, hide esa tarjeta supongo.
 
 //La función/método .addEventListener incluye un primer parámetro en referencia a lo que está escuchando. Se trata de un string específico. Hay animation, clipboard, composition, focus, fullscreen, keyboard, mouse, pointer, scroll, touch y transition events. Cada uno presenta diferentes strings de evento que podrían ser escuchados con un addEventListener para actuar al ocurrir su ejecución. (hay mas events que he dejado fuera, se encuentran en esta web --> https://developer.mozilla.org/en-US/docs/Web/Events).
 
