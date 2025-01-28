@@ -1,37 +1,37 @@
 const perricosArray = [
-  'https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg',
-  'https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg',
+  "https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg",
+  "https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg",
 ];
 //'perricosArray' es el contenedor de las imágenes de los dos primeros perricos que se pintan en pantalla por defecto al cargar la página.
 
 const brokenDogVotesListeners = () => {
-  const cardsWithoutListeners = Array.from(document.querySelectorAll('.card')).filter((dogCard) => {
-    console.log(dogCard.querySelector('p').innerHTML.length);
-    return dogCard.querySelector('p').innerHTML.length === 5;
+  const cardsWithoutListeners = Array.from(document.querySelectorAll(".card")).filter((dogCard) => {
+    console.log(dogCard.querySelector("p").innerHTML.length);
+    return dogCard.querySelector("p").innerHTML.length === 5;
   });
 
   cardsWithoutListeners.forEach((card) => {
-    let positiveButton = card.querySelector('.vote-nice');
-    let negativeButton = card.querySelector('.vote-ugly');
+    let positiveButton = card.querySelector(".vote-nice");
+    let negativeButton = card.querySelector(".vote-ugly");
 
     let positiveVote = 0;
     let negativeVote = 0;
 
-    positiveButton.addEventListener('click', () => {
+    positiveButton.addEventListener("click", () => {
       positiveVote += 1;
-      card.querySelector('p').innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
+      card.querySelector("p").innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
 
       if (positiveVote >= 5) {
-        positiveButton.style.visibility = 'hidden';
+        positiveButton.style.visibility = "hidden";
       }
     });
 
-    negativeButton.addEventListener('click', () => {
+    negativeButton.addEventListener("click", () => {
       negativeVote += 1;
-      card.querySelector('p').innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
+      card.querySelector("p").innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
 
       if (negativeVote >= 5) {
-        negativeButton.style.visibility = 'hidden';
+        negativeButton.style.visibility = "hidden";
       }
     });
   }); //Se me fue de las manos. Aun filtrando las tarjetas para seleccionar las que no tienen event listeners, el haber declarado positiveVote y negativeVote de manera local hace que internamente se reinicien para las tarjetas a las que no se añade un nuevo event listener lo que provoca que se rompan.
@@ -39,25 +39,25 @@ const brokenDogVotesListeners = () => {
 
 const hideButton = (count, button) => {
   if (count >= 5) {
-    button.style.visibility = 'hidden';
+    button.style.visibility = "hidden";
   }
 };
 
 const giveDogVotesListeners = () => {
-  document.querySelectorAll('.vote-nice').forEach((button) => {
-    button.addEventListener('click', () => {
+  document.querySelectorAll(".vote-nice").forEach((button) => {
+    button.addEventListener("click", () => {
       const parrafo = button.previousElementSibling; //Desde el botón seleccionamos su hermano anterior, el párrafo con contadores.
-      const likeCountNode = parrafo.querySelector('.like-count'); //Guardamos la posición del contador positivo en una variable.
+      const likeCountNode = parrafo.querySelector(".like-count"); //Guardamos la posición del contador positivo en una variable.
       likeCountNode.innerText = Number(likeCountNode.innerText) + 1; //Convertimos a número su interior y sumamos 1.
 
       hideButton(likeCountNode.innerText, button);
     });
   });
 
-  document.querySelectorAll('.vote-ugly').forEach((button) => {
-    button.addEventListener('click', () => {
+  document.querySelectorAll(".vote-ugly").forEach((button) => {
+    button.addEventListener("click", () => {
       const parrafo = button.previousElementSibling.previousElementSibling;
-      const dislikeCountNode = parrafo.querySelector('.dislike-count');
+      const dislikeCountNode = parrafo.querySelector(".dislike-count");
       dislikeCountNode.innerText = Number(dislikeCountNode.innerText) + 1;
 
       hideButton(dislikeCountNode.innerText, button);
@@ -66,7 +66,7 @@ const giveDogVotesListeners = () => {
 };
 
 function renderPerrico(image) {
-  const dogList = document.querySelector('#dog-list'); //Guardamos el div específico al que queremos acceder en una variable.
+  const dogList = document.querySelector("#dog-list"); //Guardamos el div específico al que queremos acceder en una variable.
   const htmltoAdd = `<div class="card">
   <img src="${image}" alt="Perro" />
   <br />
@@ -120,7 +120,7 @@ const addFivePerricosEficiente = async () => {
 const addPerricoStart = async () => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector('#dog-list');
+  const dogList = document.querySelector("#dog-list");
   const htmltoAdd = `<div class="card">
   <img src="${perricoImg}" alt="Perro" />
   <br />
@@ -134,38 +134,43 @@ const addPerricoStart = async () => {
 };
 
 const hideUglyDoggies = () => {
-  document.querySelectorAll('.dislike-count').forEach((count) => {
+  document.querySelectorAll(".dislike-count").forEach((count) => {
     if (count.innerHTML > 0) {
-      count.parentElement.parentElement.style.display = 'none';
+      count.parentElement.parentElement.style.display = "none";
     }
   });
 };
 
 const showAllDoggies = () => {
-  document.querySelectorAll('.card').forEach((dogCard) => {
-    dogCard.style.display = ''; //"set display to an empty string - this will allow the row to use its default display value and so works in all browsers"
+  document.querySelectorAll(".card").forEach((dogCard) => {
+    dogCard.style.display = ""; //"set display to an empty string - this will allow the row to use its default display value and so works in all browsers"
   });
 };
 
 //Según Josmi cargar todos los perritos al mismo tiempo sería peor, porque en lugares con mala conexión, verán los recuadros pero no verán los perros hast que terminen de cargar.
 
-document.querySelector('#add-1-perrico').addEventListener('click', () => {
+document.querySelector("#add-1-perrico").addEventListener("click", () => {
   addPerricoEficiente();
 });
 
-document.querySelector('#add-5-perrico').addEventListener('click', function () {
+document.querySelector("#add-5-perrico").addEventListener("click", function () {
   addFivePerricosEficiente();
 });
 
-document.querySelector('#add-perrico-start').addEventListener('click', function () {
+document.querySelector("#add-perrico-start").addEventListener("click", function () {
   addPerricoStart();
 });
 
-document.querySelector('#hide-uglies').addEventListener('click', function () {
+document.querySelector("#hide-uglies").addEventListener("click", function () {
   hideUglyDoggies();
+  const selectButton = document.querySelector("#hide-uglies");
+  if (selectButton.classList.contains("button-selected")) {
+    showAllDoggies();
+  }
+  selectButton.classList.toggle("button-selected"); //Mucho cuidado aquí con el orden de las cosas, de ir el toggle antes que el condicional, la primera ejecución se rompe siempre, ya que los oculta, adquiere la clase que permite mostrarlos y los vuelve a mostrar.
 });
 
-document.querySelector('#show-all').addEventListener('click', function () {
+document.querySelector("#show-all").addEventListener("click", function () {
   showAllDoggies();
 });
 
