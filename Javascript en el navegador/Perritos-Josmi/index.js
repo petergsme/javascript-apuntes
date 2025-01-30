@@ -149,16 +149,28 @@ const showAllDoggies = () => {
 
 //Según Josmi cargar todos los perritos al mismo tiempo sería peor, porque en lugares con mala conexión, verán los recuadros pero no verán los perros hast que terminen de cargar.
 
+const timeOutId = setTimeout(() => {
+  document.querySelector("#alert").style.display = "inline-block";
+}, 10000); // A los 10 segundos muestra un texto que te dije que clickes un fucking boton.
+
+function clearText() {
+  clearTimeout(timeOutId);
+  document.querySelector("#alert").style.display = "none";
+} //Cuando clicas un boton llamas a esta funcion, sirve para que no se muestre el texto que dice que clickes y se carga el timeout formalmente.
+
 document.querySelector("#add-1-perrico").addEventListener("click", () => {
   addPerricoEficiente();
+  clearText();
 });
 
 document.querySelector("#add-5-perrico").addEventListener("click", function () {
   addFivePerricosEficiente();
+  clearText();
 });
 
 document.querySelector("#add-perrico-start").addEventListener("click", function () {
   addPerricoStart();
+  clearText();
 });
 
 document.querySelector("#hide-uglies").addEventListener("click", function () {
@@ -173,6 +185,19 @@ document.querySelector("#hide-uglies").addEventListener("click", function () {
 document.querySelector("#show-all").addEventListener("click", function () {
   showAllDoggies();
 });
+
+let automaticPerrosCount = 0;
+
+const intervalId = setInterval(() => {
+  addPerricoEficiente();
+  automaticPerrosCount++;
+
+  if (automaticPerrosCount === 2) {
+    clearInterval(intervalId);
+  }
+}, 10000); //Añade un perrico cada 10 segundos, cuando ha añadido dos deja de añadir.
+
+//Voy a actualizar la lógica de los tresprimeros botones para saber si han sido clickados. tras eso hare aparecer un texto position fixed obligandote a clickar un boton.
 
 //Para los perritos positivos tendriamos que crear el boton, luego darle aqui un event listener para que ejecutase su funcion y sufuncion seria ocultar los perritos no positivos. para eso necesitariamos acceder a cada uno de los botones de dislike y comprobar que son mayores que 0, si lo son, hide esa tarjeta supongo.
 

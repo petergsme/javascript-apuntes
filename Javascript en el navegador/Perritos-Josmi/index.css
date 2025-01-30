@@ -38,3 +38,9 @@ img {
   background: #3661d5;
   color: white;
 }
+
+#alert {
+  font-size: 15px;
+  color: black;
+  display: none;
+}
