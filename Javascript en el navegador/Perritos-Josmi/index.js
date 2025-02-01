@@ -1,205 +1,186 @@
 const perricosArray = [
-  "https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg",
-  "https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg",
+  'https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg',
+  'https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg',
 ];
 //'perricosArray' es el contenedor de las imágenes de los dos primeros perricos que se pintan en pantalla por defecto al cargar la página.
 
-const brokenDogVotesListeners = () => {
-  const cardsWithoutListeners = Array.from(document.querySelectorAll(".card")).filter((dogCard) => {
-    console.log(dogCard.querySelector("p").innerHTML.length);
-    return dogCard.querySelector("p").innerHTML.length === 5;
-  });
+/*
 
-  cardsWithoutListeners.forEach((card) => {
-    let positiveButton = card.querySelector(".vote-nice");
-    let negativeButton = card.querySelector(".vote-ugly");
+SECCIÓN INICIAL DE TIMEOUT
 
-    let positiveVote = 0;
-    let negativeVote = 0;
+*/
 
-    positiveButton.addEventListener("click", () => {
-      positiveVote += 1;
-      card.querySelector("p").innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
+const timeOutId = setTimeout(() => {
+  document.querySelector('#alert').style.display = 'inline-block';
+}, 3000); // A los 10 segundos muestra un texto que te dije que clickes un fucking boton.
 
-      if (positiveVote >= 5) {
-        positiveButton.style.visibility = "hidden";
-      }
-    });
+// De dejar en mi caso display vacío para que intentara mostrarse no iría. Esto solo funciona cuando ese display none lo has metido en su etiqueta de html como propiedad. Si lo metiste con CSS tienes que darle un bloque real.
 
-    negativeButton.addEventListener("click", () => {
-      negativeVote += 1;
-      card.querySelector("p").innerHTML = `<p>${positiveVote} ❤️ ${negativeVote}🤮</p>`;
+function clearWarningText() {
+  clearTimeout(timeOutId);
+  document.querySelector('#alert').style.display = 'none';
+} //Cuando clicas un boton llamas a esta funcion, sirve para que no se muestre el texto que dice que clickes y se carga el timeout formalmente.
 
-      if (negativeVote >= 5) {
-        negativeButton.style.visibility = "hidden";
-      }
-    });
-  }); //Se me fue de las manos. Aun filtrando las tarjetas para seleccionar las que no tienen event listeners, el haber declarado positiveVote y negativeVote de manera local hace que internamente se reinicien para las tarjetas a las que no se añade un nuevo event listener lo que provoca que se rompan.
-};
+/*
 
-const hideButton = (count, button) => {
-  if (count >= 5) {
-    button.style.visibility = "hidden";
-  }
-};
+FUNCIONES BÁSICAS PARA AÑADIR PERRICOS Y DAR LISTENERS A LOS BOTONES DE SUS TARJETAS QUE AÑADAN VOTOS.
+
+*/
 
 const giveDogVotesListeners = () => {
-  document.querySelectorAll(".vote-nice").forEach((button) => {
-    button.addEventListener("click", () => {
+  document.querySelectorAll('.like').forEach((button) => {
+    button.addEventListener('click', () => {
       const parrafo = button.previousElementSibling; //Desde el botón seleccionamos su hermano anterior, el párrafo con contadores.
-      const likeCountNode = parrafo.querySelector(".like-count"); //Guardamos la posición del contador positivo en una variable.
+      const likeCountNode = parrafo.querySelector('.like-count'); //Guardamos la posición del contador positivo en una variable.
       likeCountNode.innerText = Number(likeCountNode.innerText) + 1; //Convertimos a número su interior y sumamos 1.
-
-      hideButton(likeCountNode.innerText, button);
     });
   });
 
-  document.querySelectorAll(".vote-ugly").forEach((button) => {
-    button.addEventListener("click", () => {
-      const parrafo = button.previousElementSibling.previousElementSibling;
-      const dislikeCountNode = parrafo.querySelector(".dislike-count");
+  document.querySelectorAll('.dislike').forEach((button) => {
+    button.addEventListener('click', () => {
+      const dislikeCountNode = button.closest('.card').querySelector('.dislike-count'); // Ojito a como usamos aquí closest, que solo busca hacia arriba, llegamos arriba y bajamos.
       dislikeCountNode.innerText = Number(dislikeCountNode.innerText) + 1;
-
-      hideButton(dislikeCountNode.innerText, button);
     });
   });
 };
-
-function renderPerrico(image) {
-  const dogList = document.querySelector("#dog-list"); //Guardamos el div específico al que queremos acceder en una variable.
-  const htmltoAdd = `<div class="card">
-  <img src="${image}" alt="Perro" />
-  <br />
-  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="vote-nice">Preciosísimo</button> <button class="vote-ugly">Feísisimo</button>
-</div>`;
-  dogList.innerHTML += htmltoAdd; //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
-}
 
 function renderPerricoArray() {
-  //Aquí solía estar "dogList.innerHTML = '';", limpiaba el HTML cuando la manera de renderizar los perricos dependía del array, ahora parece innecesario, así que lo he eliminado.
+  const dogList = document.querySelector('#dog-list');
+  dogList.innerHTML = '';
 
-  perricosArray.forEach((dogImage) => {
-    renderPerrico(dogImage);
+  perricosArray.forEach((dogImage, index) => {
+    const htmlAdd = `<div class="card">
+  <img src="${dogImage}" alt="Perro" />
+  <br />
+  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
+  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
+</div>`;
+
+    dogList.innerHTML += htmlAdd;
   });
   giveDogVotesListeners();
 }
 
-renderPerricoArray(); //Ejecuta la función de arriba 1 única vez, para renderizar en la página los dos perricos iniciales.
-
-const addPerrico = async () => {
-  //Las líneas de debajo ya no tienen mucho sentido en relación al contexto actual del código. Se refieren a cuando los perricos se renderizaban desde el array inicial.
-
-  const perricoImg = await getRandomDogImage();
-  perricosArray.push(perricoImg); //Añadimos la imagen del nuevo perrico al array inicial.
-  renderPerricoArray(); //Ejecutamos la función anterior con la nueva imagen. Básicamente borra todas y mete todas y la nueva de nuevo dentro de #dog-list.
-};
-
-const addPerricoEficiente = async () => {
-  const perricoImg = await getRandomDogImage();
-  renderPerrico(perricoImg);
-  giveDogVotesListeners();
-};
-
-const addFivePerricos = async () => {
-  for (let count = 1; count <= 5; count++) {
-    const perricoImg = await getRandomDogImage();
-    perricosArray.push(perricoImg);
-  }
-  renderPerricoArray();
-};
-
-const addFivePerricosEficiente = async () => {
-  for (let count = 1; count <= 5; count++) {
-    const perricoImg = await getRandomDogImage();
-    renderPerrico(perricoImg);
-  }
-  giveDogVotesListeners();
-};
-
-const addPerricoStart = async () => {
+const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector("#dog-list");
-  const htmltoAdd = `<div class="card">
+  const dogList = document.querySelector('#dog-list');
+
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  // Si hay algún filtro seleccionado los perritos se añaden con display none.
+
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="vote-nice">Preciosísimo</button> <button class="vote-ugly">Feísisimo</button>
+  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
 </div>`;
 
-  dogList.innerHTML = htmltoAdd + dogList.innerHTML;
-
+  if (addToStart) {
+    dogList.innerHTML = htmlAdd + dogList.innerHTML;
+    //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
+  } else {
+    dogList.innerHTML = dogList.innerHTML + htmlAdd;
+  }
   giveDogVotesListeners();
 };
 
-const hideUglyDoggies = () => {
-  document.querySelectorAll(".dislike-count").forEach((count) => {
-    if (count.innerHTML > 0) {
-      count.parentElement.parentElement.style.display = "none";
+//Mucho cuidado, aquí arriba accedes al INNERHTML de dogList, no puedes hacer que dogList = document.querySelector('#dog-list').innerHTML; y luego poner dogList = newDog + dogList, es una variable const. Estamos trabajando con innerHTML.
+
+/*
+
+LISTENERS DE LOS BOTONES QUE AÑADEN PERRICOS.
+
+*/
+
+document.querySelector('#add-1-perrico').addEventListener('click', () => {
+  addPerrico();
+  clearWarningText();
+});
+
+document.querySelector('#add-perrico-start').addEventListener('click', function () {
+  addPerrico(true);
+  clearWarningText();
+});
+
+document.querySelector('#add-5-perrico').addEventListener('click', function () {
+  clearWarningText();
+
+  addPerrico();
+  addPerrico();
+  addPerrico();
+  addPerrico();
+  addPerrico();
+});
+
+/*
+
+LISTENERS DE LOS BOTONES QUE FILTRAN Y FUNCIÓN DE FILTRADO.
+
+*/
+
+const likeFilterButton = document.querySelector('#like-filter');
+
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
+  filterPerricos();
+  //Mucho cuidado aquí con el orden de las cosas, de ir el toggle antes que el condicional, la primera ejecución se rompe siempre, ya que los oculta, adquiere la clase que permite mostrarlos y los vuelve a mostrar.
+});
+
+const dislikeFilter = document.querySelector('#dislike-filter');
+
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
+  filterPerricos();
+});
+
+function filterPerricos() {
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+
+  document.querySelectorAll('.card').forEach((dogCard) => {
+    // si no hay ningún filtro aplicado, lo muestra
+    if (!isLikeFilterSelected && !isDislikeSelected) {
+      dogCard.style.display = '';
+      return;
     }
+
+    // si preciosismo aplicado y hay preciosisimo lo muestra
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
+      return;
+    }
+
+    // si feísimo aplicado y hay feísimo lo muestra
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
+      return;
+    }
+
+    dogCard.style.display = 'none';
   });
-};
+}
 
-const showAllDoggies = () => {
-  document.querySelectorAll(".card").forEach((dogCard) => {
-    dogCard.style.display = ""; //"set display to an empty string - this will allow the row to use its default display value and so works in all browsers"
-  });
-};
+/*
 
-//Según Josmi cargar todos los perritos al mismo tiempo sería peor, porque en lugares con mala conexión, verán los recuadros pero no verán los perros hast que terminen de cargar.
+SECCIÓN FINAL DE INTERVALO PARA AÑADIR UN PAR DE PERRITOS.
 
-const timeOutId = setTimeout(() => {
-  document.querySelector("#alert").style.display = "inline-block";
-}, 10000); // A los 10 segundos muestra un texto que te dije que clickes un fucking boton.
-
-function clearText() {
-  clearTimeout(timeOutId);
-  document.querySelector("#alert").style.display = "none";
-} //Cuando clicas un boton llamas a esta funcion, sirve para que no se muestre el texto que dice que clickes y se carga el timeout formalmente.
-
-document.querySelector("#add-1-perrico").addEventListener("click", () => {
-  addPerricoEficiente();
-  clearText();
-});
-
-document.querySelector("#add-5-perrico").addEventListener("click", function () {
-  addFivePerricosEficiente();
-  clearText();
-});
-
-document.querySelector("#add-perrico-start").addEventListener("click", function () {
-  addPerricoStart();
-  clearText();
-});
-
-document.querySelector("#hide-uglies").addEventListener("click", function () {
-  hideUglyDoggies();
-  const selectButton = document.querySelector("#hide-uglies");
-  if (selectButton.classList.contains("button-selected")) {
-    showAllDoggies();
-  }
-  selectButton.classList.toggle("button-selected"); //Mucho cuidado aquí con el orden de las cosas, de ir el toggle antes que el condicional, la primera ejecución se rompe siempre, ya que los oculta, adquiere la clase que permite mostrarlos y los vuelve a mostrar.
-});
-
-document.querySelector("#show-all").addEventListener("click", function () {
-  showAllDoggies();
-});
+*/
 
 let automaticPerrosCount = 0;
 
 const intervalId = setInterval(() => {
-  addPerricoEficiente();
+  addPerrico();
   automaticPerrosCount++;
 
   if (automaticPerrosCount === 2) {
     clearInterval(intervalId);
   }
-}, 10000); //Añade un perrico cada 10 segundos, cuando ha añadido dos deja de añadir.
+}, 5000); //Añade un perrico cada 10 segundos, tras añadir dos para.
 
-//Voy a actualizar la lógica de los tresprimeros botones para saber si han sido clickados. tras eso hare aparecer un texto position fixed obligandote a clickar un boton.
-
-//Para los perritos positivos tendriamos que crear el boton, luego darle aqui un event listener para que ejecutase su funcion y sufuncion seria ocultar los perritos no positivos. para eso necesitariamos acceder a cada uno de los botones de dislike y comprobar que son mayores que 0, si lo son, hide esa tarjeta supongo.
+renderPerricoArray(); //Renderiza los dos perricos iniciales.
 
 //La función/método .addEventListener incluye un primer parámetro en referencia a lo que está escuchando. Se trata de un string específico. Hay animation, clipboard, composition, focus, fullscreen, keyboard, mouse, pointer, scroll, touch y transition events. Cada uno presenta diferentes strings de evento que podrían ser escuchados con un addEventListener para actuar al ocurrir su ejecución. (hay mas events que he dejado fuera, se encuentran en esta web --> https://developer.mozilla.org/en-US/docs/Web/Events).
 

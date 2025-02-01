@@ -136,3 +136,146 @@ console.log(booksReadByCategory);
 
 //El operador "||" en una asignación significa: "si el primer valor es válido se lo asigno a la variable, si no lo es, le asigno el segundo. Es casi como utilizar un ternario. En este caso de asignación, el segundo valor no llega a evaluarse. De invertir sus posiciones, currentCount siempre sería booksReadByCategory[book.category], porque el 0 siempre será un valor falsy.
 const currentCount = booksReadByCategory[book.category] || 0;
+
+/*
+JAVASCRIPT EN EL NAVEGADOR.
+
+.querySelector("#pepe")        devuelve el primer elemento del DOM con el id #pepe.
+.querySelectorAll("#pepe")     devuelve un pseudo-array con todos los elementos con el id #pepe del DOM.
+
+*El array del segundo método no es compatible con todos los métodos de los array, para utilizar algunos se ha de convertir a array real utilizando Array.from(X).
+*Es mejor utilizar los ID para añadir funcionalidad en lugar de clases.
+*Cuidado con como se carga el script de JS en el html. El orden importa.
+
+----------------------------------------------
+
+elemento.innerHTML            accede al HTML de un elemento.
+elemento.innerText            accede al texto de un elemento (como acceder con innerHTML pero ignorando las partes de código HTML.)
+elemento.style.display        accede a propiedades del css de un elemento.
+
+elemento.disabled = true      desactiva la funcionalidad de un elemento.
+
+elemento.parentElement        accede al padre del elemento.
+elemento.previousSibling      accede al hermano anterior del elemento.
+elemento.closest('.juan')     accede al ancestro mas cercano (x) del elemento.
+document.getElementById("p1") accede al elemento con ese id.
+
+----------------------------------------------
+
+.classList                    devuelve la lista de clases de un elemento.
+.classList.add('')            permite añadir una clase.
+.classList.remove('')         permite eliminar una clase.
+.classList.contains('')       permite saber si un elemento contiene una clase.
+.classList.toggle('')         permite poner y quitar una clase. Si la tiene la quita, si no, la pone.
+
+.className("pepe juan")       permite añadir todas las clases que necesites a un objeto, con add solo puedes darle una.
+
+----------------------------------------------
+
+.addEventListener('click', () => {});
+Permite controlar lo que provocan los eventos del navegador, provocados o no por el usuario.
+
+*Se debe tener mucho cuidado con como son añadidos los event listeners, para evitar situaciones en las que todos se añaden a todos los objetos a la vez, ya que eso genera que tengan que limpiarse y añadirse cada vez para evitar duplicados.
+
+----------------------------------------------
+
+setTimeout(()=>{}, 5000)      se ejecuta una función TRAS X tiempo.
+setInterval(()=>{}, 5000)     se ejecuta una función CADA X tiempo.
+
+*Los timeouts e intervals deben guardarse en una variable ya que devuelven un id que sirve para cesarlos. con sus funciones:
+
+clearTimeout(id)    clearInterval(id)
+
+----------------------------------------------
+
+document.createElement('div')     sirve para crear elementos dinámicamente antes de agregarlos al DOM con algún append.
+createTextNode('juanperico')      crea un nodo de texto que puede append-arse a otro como child.
+
+.appendChild(john)                añade un hijo a un elemento.
+.prepend(pep)                     añade un hijo a un elemento, pero antes de los demas, vamos, al principio.
+
+----------------------------------------------
+
+CONSEJOS
+
+*IDENTIFICA CLARAMENTE EL PROBLEMA. PREGUNTATE ¿QUÉ TENGO QUE METER EN EL DOM? Profundiza en tu problema y llegarás a lo que hay que arreglar:
+              "mi código no va porque se borra" -- superficial, sigue.
+              "no va porque lo añado de esta manera" -- bien, sigue.
+              "no va porque mi función..." -- bien, sigue.                      POR QUÉ (motivos) NO VA (siempre hay manera sencilla)
+
+*Recuerda, PIENSA COMO RESOLVER EL PROBLEMA AL REVÉS O DE MANERA MÁS SENCILLA. ¿No puede ser otro camino/elemento el que lleve al mismo lugar?.
+
+*Cuidado, no tengas código que se repita, optimiza. Ten cuidado también con tener dos pedazos de código que hagan los mismo de maneras diferentes.
+
+*Hay variaciones de funciones que no requieren de crear una función derivada de la principal, si no de llamar a la principal con un PARÁMETRO:
+*/
+const addPerrico = async (addToStart) => {
+  const perricoImg = await getRandomDogImage();
+
+  const dogList = document.querySelector('#dog-list');
+
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  // Si hay algún filtro seleccionado los perritos se añaden con display none.
+
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
+  <img src="${perricoImg}" alt="Perro" />
+  <br />
+  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
+  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
+</div>`;
+
+  if (addToStart) {
+    dogList.innerHTML = htmlAdd + dogList.innerHTML;
+    //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
+  } else {
+    dogList.innerHTML = dogList.innerHTML + htmlAdd;
+  }
+  giveDogVotesListeners();
+};
+
+// También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
+
+const likeFilterButton = document.querySelector('#like-filter');
+
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
+  filterPerricos();
+});
+
+const dislikeFilter = document.querySelector('#dislike-filter');
+
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
+  filterPerricos();
+});
+
+function filterPerricos() {
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+
+  document.querySelectorAll('.card').forEach((dogCard) => {
+    // si no hay ningún filtro aplicado, lo muestra
+    if (!isLikeFilterSelected && !isDislikeSelected) {
+      dogCard.style.display = '';
+      return;
+    }
+
+    // si preciosismo aplicado y hay preciosisimo lo muestra
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
+      return;
+    }
+
+    // si feísimo aplicado y hay feísimo lo muestra
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
+      return;
+    }
+
+    dogCard.style.display = 'none';
+  });
+}
+
+/* */

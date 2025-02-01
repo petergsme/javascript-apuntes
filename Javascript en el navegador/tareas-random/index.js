@@ -19,51 +19,47 @@ function getRandomArray() {
   return randomTasks;
 }
 
-// Estas funciones serán las que iremos cambiando con los ejemplos
 function regenerateArray() {
   const tasks = getRandomArray();
-  let newTasksHTML = "";
+  document.querySelector('#tasks').innerHTML = '';
 
   tasks.forEach((task) => {
-    newTasksHTML += `
-     <div class="task">
-        <span class="${task.isCompleted ? "completed" : ""}">${task.text}</span> -
-        <span class="status">${task.isCompleted ? "completed" : "pending"}</span>
-      </div>`;
+    createTaskNode(task, true);
   });
-  document.querySelector("#tasks").innerHTML = newTasksHTML;
 }
 
-const addTask = (addToEnd) => {
+function createTaskNode(task, addToEnd) {
+  const taskNode = document.createElement('div');
+  //.createElement() sirve para crear elementos dinámicamente antes de agregarlos al DOM con algún append.
+  taskNode.className = 'task';
+
+  taskNode.innerHTML = `
+    <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
+    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>`;
+
+  const tasksNode = document.querySelector('#tasks');
+
+  if (addToEnd) {
+    tasksNode.appendChild(taskNode);
+  } else {
+    tasksNode.prepend(taskNode);
+  }
+} //Esta función toma de parámetro si debe añadir o no la tarea al final del array, y la tarea en cuestion a añadir. Si te fijas al acceder a su innerHTML los valores de la tarea son las propiedades del parámetro correspondiente a la tarea.
+
+function addTask(addToEnd) {
   const task = generateRandomTask();
-  let newTaskHTML = `
-   <div class="task">
-      <span class="${task.isCompleted ? "completed" : ""}">${task.text}</span> -
-      <span class="status">${task.isCompleted ? "completed" : "pending"}</span>
-    </div>`;
-
-  const taskNode = document.querySelector("#tasks").innerHTML;
-
-  taskNode = newTaskHTML + taskNode;
-}; //Termina esto e implementa la funcion arreglada con parametro para addlast
-
-function addFirst() {
-  addTask();
-}
-
-function addLast() {
-  addTask(true);
+  createTaskNode(task, addToEnd);
 }
 
 // event listeners para que los botones llamen a las funciones anteriores
-document.querySelector("#regenate").addEventListener("click", () => {
+document.querySelector('#regenate').addEventListener('click', () => {
   regenerateArray();
 });
 
-document.querySelector("#add-first").addEventListener("click", () => {
-  addFirst();
+document.querySelector('#add-first').addEventListener('click', () => {
+  addTask();
 });
 
-document.querySelector("#add-last").addEventListener("click", () => {
-  addLast();
+document.querySelector('#add-last').addEventListener('click', () => {
+  addTask(true);
 });
