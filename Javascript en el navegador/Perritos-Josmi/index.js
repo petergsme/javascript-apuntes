@@ -27,41 +27,31 @@ FUNCIONES BÁSICAS PARA AÑADIR PERRICOS Y DAR LISTENERS A LOS BOTONES DE SUS TA
 
 */
 
-const giveDogVotesListeners = () => {
-  document.querySelectorAll('.like').forEach((button) => {
-    button.addEventListener('click', () => {
-      const parrafo = button.previousElementSibling; //Desde el botón seleccionamos su hermano anterior, el párrafo con contadores.
-      const likeCountNode = parrafo.querySelector('.like-count'); //Guardamos la posición del contador positivo en una variable.
-      likeCountNode.innerText = Number(likeCountNode.innerText) + 1; //Convertimos a número su interior y sumamos 1.
-    });
+const giveDogNodeListeners = (dogNode) => {
+  const likeButton = dogNode.querySelector('.like');
+  const dislikeButton = dogNode.querySelector('.dislike');
+
+  dogNode.querySelector('.like').addEventListener('click', () => {
+    const parrafo = likeButton.previousElementSibling; //Desde el botón seleccionamos su hermano anterior, el párrafo con contadores.
+    const likeCountNode = parrafo.querySelector('.like-count'); //Guardamos la posición del contador positivo en una variable.
+    likeCountNode.innerText = Number(likeCountNode.innerText) + 1; //Convertimos a número su interior y sumamos 1.
   });
 
-  document.querySelectorAll('.dislike').forEach((button) => {
-    button.addEventListener('click', () => {
-      const dislikeCountNode = button.closest('.card').querySelector('.dislike-count'); // Ojito a como usamos aquí closest, que solo busca hacia arriba, llegamos arriba y bajamos.
-      dislikeCountNode.innerText = Number(dislikeCountNode.innerText) + 1;
-    });
+  dogNode.querySelector('.dislike').addEventListener('click', () => {
+    const dislikeCountNode = dislikeButton.closest('.card').querySelector('.dislike-count'); // Ojito a como usamos aquí closest, que solo busca hacia arriba, llegamos arriba y bajamos.
+    dislikeCountNode.innerText = Number(dislikeCountNode.innerText) + 1;
   });
 };
 
 function renderPerricoArray() {
-  const dogList = document.querySelector('#dog-list');
-  dogList.innerHTML = '';
+  document.querySelector('#dog-list').innerHTML = '';
 
-  perricosArray.forEach((dogImage, index) => {
-    const htmlAdd = `<div class="card">
-  <img src="${dogImage}" alt="Perro" />
-  <br />
-  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
-</div>`;
-
-    dogList.innerHTML += htmlAdd;
+  perricosArray.forEach((dogImage) => {
+    addPerrico(dogImage, false);
   });
-  giveDogVotesListeners();
 }
 
-const addPerrico = async (addToStart) => {
+const addPerrico = async (image, addToStart) => {
   const perricoImg = await getRandomDogImage();
 
   const dogList = document.querySelector('#dog-list');
@@ -69,23 +59,26 @@ const addPerrico = async (addToStart) => {
   const isAnyFilterSelected = document.querySelector('.filter-selected');
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
-  <img src="${perricoImg}" alt="Perro" />
+  const dogNode = document.createElement('div');
+  dogNode.className = 'card';
+  dogNode.style.display = isAnyFilterSelected ? 'none' : '';
+
+  dogNode.innerHTML = `
+  <img src="${image || perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
-</div>`;
+  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>`;
 
   if (addToStart) {
-    dogList.innerHTML = htmlAdd + dogList.innerHTML;
-    //Como el HTML es en esencia un string multilínea, para añadir más sin borrar el que ya hay operamos con +=, que CONCATENA los strings, o lo que es lo mismo pone el codigo del html al lado del anterior.
+    dogList.prepend(dogNode);
   } else {
-    dogList.innerHTML = dogList.innerHTML + htmlAdd;
+    dogList.append(dogNode);
   }
-  giveDogVotesListeners();
+  giveDogNodeListeners(dogNode);
 };
 
-//Mucho cuidado, aquí arriba accedes al INNERHTML de dogList, no puedes hacer que dogList = document.querySelector('#dog-list').innerHTML; y luego poner dogList = newDog + dogList, es una variable const. Estamos trabajando con innerHTML.
+//Mucho cuidado, no puedes hacer que dogList = document.querySelector('#dog-list').innerHTML; y luego poner dogList = newDog + dogList, es una variable const, no cambias la variable si no innerHTML de la direccion que almacena:
+// dogList.innerHTML = newDog + dogList.innerHTML.
 
 /*
 
@@ -99,7 +92,7 @@ document.querySelector('#add-1-perrico').addEventListener('click', () => {
 });
 
 document.querySelector('#add-perrico-start').addEventListener('click', function () {
-  addPerrico(true);
+  addPerrico(false, true);
   clearWarningText();
 });
 
@@ -185,15 +178,3 @@ renderPerricoArray(); //Renderiza los dos perricos iniciales.
 //La función/método .addEventListener incluye un primer parámetro en referencia a lo que está escuchando. Se trata de un string específico. Hay animation, clipboard, composition, focus, fullscreen, keyboard, mouse, pointer, scroll, touch y transition events. Cada uno presenta diferentes strings de evento que podrían ser escuchados con un addEventListener para actuar al ocurrir su ejecución. (hay mas events que he dejado fuera, se encuentran en esta web --> https://developer.mozilla.org/en-US/docs/Web/Events).
 
 //Su segundo parámetro hace referencia a lo que debe cambiar con ese evento, en este caso es la función que ejecuta addPerrico(); Hay un tercer parámetro que, de momento, no usaremos.
-
-// Para arreglar el tema de el reseteo del HTML. Tendríamos que crear funciones adicionales y reestructurar.
-
-// 1. Tomaríamos la parte de renderPerricoArray() que sirve para acceder a la ubicacion, el html que debemos añadir y la instrucción para añadirlo. No necesitamos llamarlo ahí.
-
-// 2. A partir de esos pedazos de código, crearíamos una nueva función (renderPerrico(image)) que utilizase las imágenes de los siguientes perritos a añadir empleando los botones como parámetro. Sin necesidad de limpiar el HTML.
-
-// 3. Tras eso deberíamos sustituir esa nueva función en las que ya usábamos para añadir perricos (addPerricos y addFivePerricos).
-
-// 4. Como en la concepción original los listeners eran dados en renderPerricoArray(), ahora que ya no utilizamos esa función más que para pintar por pantalla el array inicial, necesitamos añadir los listeners en otro lugar. Los añadiremos al final de addPerricos y addFivePerricos, ya que para ese punto, renderPerrico(image) ya se habrá ejecutado y los objetos sobre los que se han de añadir los listeners existirán.
-
-// 5. Finalmente optimizaríamos la función original para que hiciera uso de las otras funciones creadas y evitase repetir código.
