@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Hanged Man</title>
+    <link rel="icon" href="images/webIcon.png">
+</head>
+<body>
+    <h1>Ahorcado</h1>
+    
+    <form id="form">
+        <h3>Para dos jugadores:</h3>
+        <input type="text" placeholder="palabra a adivinar" id="word">
+        <input type="submit" value="Enviar">
+    </form>
+    <h3 id="option">Si no tienes amigos:</h3>
+    <button id="randomWord" onclick="randomWord()">Palabra random</button>
+    <div>
+        <img class="inv" id="hanged" alt="Hanged Man" src="images/0.png">
+        <div id="slots">
+            <!--parte para los slots donde van las letras acertadas -->
+        </div>
+        <div id="buttonLetters" class="inv"> <!--el id y la class igual a inv serán para que haga lo mismo que la imágen, aparecer una vez enviada la palabra -->
+            <button onclick="hangedMan('A', this)">A</button> <!--va a pasar a la función 'A' y el elemento donde está el onclick, es decir, un botón -->
+            <button onclick="hangedMan('B', this)">B</button>
+            <button onclick="hangedMan('C', this)">C</button>
+            <button onclick="hangedMan('D', this)">D</button>
+            <button onclick="hangedMan('E', this)">E</button>
+            <button onclick="hangedMan('F', this)">F</button>
+            <button onclick="hangedMan('G', this)">G</button>
+            <button onclick="hangedMan('H', this)">H</button>
+            <button onclick="hangedMan('I', this)">I</button>
+            <button onclick="hangedMan('J', this)">J</button>
+            <button onclick="hangedMan('K', this)">K</button>
+            <button onclick="hangedMan('L', this)">L</button>
+            <button onclick="hangedMan('M', this)">M</button>
+            <button onclick="hangedMan('N', this)">N</button>
+            <button onclick="hangedMan('Ñ', this)">Ñ</button>
+            <button onclick="hangedMan('O', this)">O</button>
+            <button onclick="hangedMan('P', this)">P</button>
+            <button onclick="hangedMan('Q', this)">Q</button>
+            <button onclick="hangedMan('R', this)">R</button>
+            <button onclick="hangedMan('S', this)">S</button>
+            <button onclick="hangedMan('T', this)">T</button>
+            <button onclick="hangedMan('U', this)">U</button>
+            <button onclick="hangedMan('V', this)">V</button>
+            <button onclick="hangedMan('W', this)">W</button>
+            <button onclick="hangedMan('Z', this)">Z</button>
+        </div>
+        <div id="restart" class="restartButton inv" >
+            <button onclick="reset()">Reiniciar</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
