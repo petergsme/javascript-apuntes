@@ -37,7 +37,7 @@ function createTaskNode(task, addToEnd) {
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
-    <button class="${task.isFav ? 'fav' : ''} hiddenButton">${task.isFav ? '💝' : '💔'}</button>`;
+    <button class="${task.isFav ? 'fav' : ''}" style="opacity:0">${task.isFav ? '💝' : '💔'}</button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -62,6 +62,14 @@ function createTaskNode(task, addToEnd) {
     const isCurrentlyFav = favButton.classList.contains('fav');
     favButton.classList.toggle('fav');
     favButton.innerText = isCurrentlyFav ? '💔' : '💝';
+  });
+
+  favButton.addEventListener('mouseover', (event) => {
+    favButton.style.opacity = 1;
+  });
+
+  favButton.addEventListener('mouseout', (event) => {
+    favButton.style.opacity = 0;
   });
 } //Esta función toma de parámetro si debe añadir o no la tarea al final del array, y la tarea en cuestion a añadir. Si te fijas al acceder a su innerHTML los valores de la tarea son las propiedades del parámetro correspondiente a la tarea.
 
