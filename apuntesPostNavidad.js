@@ -289,4 +289,43 @@ Los eventos se propagan de abajo hacia arriba. Se conoce como EVENT BUBBLING. Si
 
 event.stopPropagation();
 
+*Dentro de una etiqueta form en HTML, todos sus botones hacen de submit del formulario.
+
+Podemos obtener un objeto basandonos en el valor de uno de sus atributos de la siguiente manera:
+
+document.querySelector('[placeholder="Escribe tu tarea"]')
+
+Cuando utilicemos eventos nuevos, pide un console log del propio evento para conocer sus propiedades y saber qué contienen. Solo así sabrás como acceder a ello en tu código.
+
+----------------------------------------------
+
+localStorage.setItem('nombre', 'Juan Pérez')    // Guarda el valor 'Juan Pérez' con la clave 'nombre'.
+
+localStorage.getItem('nombre')                  // Recupera el valor de 'nombre' -> 'Juan Pérez'.
+
+const usuario = { nombre: 'Ana', edad: 30, ciudad: 'Madrid' } 
+localStorage.setItem('usuario', JSON.stringify(usuario))  // Guarda un objeto como string JSON.
+
+const usuarioGuardado = localStorage.getItem('usuario')  
+const usuarioObjeto = JSON.parse(usuarioGuardado)         // Recupera el objeto guardado y lo convierte de JSON a objeto usable.
+
+usuarioObjeto.nombre    // 'Ana'   -> Accede a la propiedad 'nombre' del objeto recuperado.
+
+usuarioObjeto.edad      // 30      -> Accede a la propiedad 'edad' del objeto recuperado.
+
+localStorage.removeItem('edad')                           // Elimina 'edad' del localStorage.
+
+localStorage.getItem('edad')                              // Intenta recuperar 'edad' después de eliminarla -> null.
+
+const coche = { marca: 'Toyota', modelo: 'Corolla', año: 2022 }
+localStorage.setItem('miCoche', JSON.stringify(coche))    // Guarda un objeto con la clave 'miCoche'.
+
+const cocheGuardado = JSON.parse(localStorage.getItem('miCoche'))  
+// Recupera y convierte el objeto de JSON a objeto usable.
+
+cocheGuardado.marca   // 'Toyota'  -> Accede a la propiedad 'marca' del objeto recuperado.
+
+localStorage.removeItem('miCoche')                        // Borra 'miCoche' del localStorage.
+
+localStorage.getItem('miCoche')                           // Intenta recuperar 'miCoche' después de eliminarlo -> null.
 */

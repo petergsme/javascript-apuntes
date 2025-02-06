@@ -38,10 +38,17 @@
     } */
   </style>
   <body class="content">
+    <form id="create-task">
+      <input type="text" placeholder="Escribe tu tarea" name="taskText" />
+      <button type="submit" disabled>Crear tarea</button>
+    </form>
+
     <div class="buttons">
       <button id="regenate">Regenerar listado</button>
       <button id="add-first">Añadir al principio</button>
       <button id="add-last">Añadir al final</button>
+
+      <!-- listener al formulario, y -->
     </div>
     <div id="tasks">
       <div class="task">
