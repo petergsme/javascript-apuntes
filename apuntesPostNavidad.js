@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date("2025-01-04T15:21:38.207Z");
-const date2 = new Date("2025-01-04T15:25:38.207Z");
+const date1 = new Date('2025-01-04T15:21:38.207Z');
+const date2 = new Date('2025-01-04T15:25:38.207Z');
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
-  { title: "La venganza de Xindasvinto", category: "history", read: true },
-  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
-  { title: "Arcanum ilimitado", category: "fantasy", read: false },
-  { title: "El señor de los anillos", category: "fantasy", read: true },
+  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
+  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
+  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
+  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
+  { title: 'El señor de los anillos', category: 'fantasy', read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector("#dog-list");
+  const dogList = document.querySelector('#dog-list');
 
-  const isAnyFilterSelected = document.querySelector(".filter-selected");
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,97 +235,97 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector("#like-filter");
+const likeFilterButton = document.querySelector('#like-filter');
 
-likeFilterButton.addEventListener("click", function () {
-  likeFilterButton.classList.toggle("filter-selected");
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector("#dislike-filter");
+const dislikeFilter = document.querySelector('#dislike-filter');
 
-dislikeFilter.addEventListener("click", function () {
-  dislikeFilter.classList.toggle("filter-selected");
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
-  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
 
-  document.querySelectorAll(".card").forEach((dogCard) => {
+  document.querySelectorAll('.card').forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = "";
+      dogCard.style.display = '';
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector(".like-count").innerText;
-    if (likeCount !== "" && isLikeFilterSelected) {
-      dogCard.style.display = "";
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
-    if (dislikeCount !== "" && isDislikeSelected) {
-      dogCard.style.display = "";
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
       return;
     }
 
-    dogCard.style.display = "none";
+    dogCard.style.display = 'none';
   });
 }
 
-/* 
+/*
+
 Las funciones de los addEventListeners tienen un parámetro que solemos dejar en blanco pero que tiene mucho valor. Ese parámetro es un objeto que contiene la información y propiedades del evento ejecutado, su nombre es EVENT ARGUMENT.
 
 event.preventDefault()      Evita aplicar el comportamiento por defecto del navegador provocado indirectamente por un evento.
 
-Hay algunas propiedades comunes a la mayoría de eventos.
-
-Los eventos se propagan de abajo hacia arriba. Se conoce como EVENT BUBBLING. Si por algún motivo necesitas evitar que se propage hacia su padre puedes usar el parámetro event del listener junto con la siguiente función:
-
-event.stopPropagation();
+*Hay algunas propiedades comunes a la mayoría de eventos. Cuando utilices eventos nuevos, pide un console log del mismo para conocer sus propiedades y saber qué contienen. Solo así sabrás como acceder a ello en tu código.
 
 *Dentro de una etiqueta form en HTML, todos sus botones hacen de submit del formulario.
 
+
+Los eventos se propagan de abajo hacia arriba. Esto se conoce como EVENT BUBBLING. Si por algún motivo necesitas evitar que un evento se propage hacia su padre puedes usar el parámetro event del listener junto con la siguiente función:
+
+event.stopPropagation();
+
+
 Podemos obtener un objeto basandonos en el valor de uno de sus atributos de la siguiente manera:
 
-document.querySelector('[placeholder="Escribe tu tarea"]')
-
-Cuando utilicemos eventos nuevos, pide un console log del propio evento para conocer sus propiedades y saber qué contienen. Solo así sabrás como acceder a ello en tu código.
+document.querySelector('[placeholder="Escribe tu tarea"]')    pseudoselector de atributo.
 
 ----------------------------------------------
 
-localStorage.setItem('nombre', 'Juan Pérez')    // Guarda el valor 'Juan Pérez' con la clave 'nombre'.
+PÍLDORA SOBRE FORMULARIOS
 
-localStorage.getItem('nombre')                  // Recupera el valor de 'nombre' -> 'Juan Pérez'.
+event.target                      Target es una propiedad del obj. event que hace referencia al elemento que disparó el evento.
 
-const usuario = { nombre: 'Ana', edad: 30, ciudad: 'Madrid' } 
-localStorage.setItem('usuario', JSON.stringify(usuario))  // Guarda un objeto como string JSON.
+new FormData(event.target);       Objeto que recopila los valores de un formulario sin necesidad de acceder a cada input.
+formData.get('nameDelInput');     Obtiene el valor de un input del formulario a través de su propiedad name.
 
-const usuarioGuardado = localStorage.getItem('usuario')  
-const usuarioObjeto = JSON.parse(usuarioGuardado)         // Recupera el objeto guardado y lo convierte de JSON a objeto usable.
+----------------------------------------------
 
-usuarioObjeto.nombre    // 'Ana'   -> Accede a la propiedad 'nombre' del objeto recuperado.
+LOCALSTORAGE
 
-usuarioObjeto.edad      // 30      -> Accede a la propiedad 'edad' del objeto recuperado.
+localStorage es una base de datos simple dentro del navegador donde puedes guardar información que persiste incluso si cierras y vuelves a abrir la página. Esta base de datos sigue la estructura de clave - valor.
 
-localStorage.removeItem('edad')                           // Elimina 'edad' del localStorage.
+localStorage.setItem('nombre', 'Juan Pérez')    Guarda el valor 'Juan Pérez' con la clave 'nombre'.
+localStorage.getItem('nombre')                  Recupera el valor de 'nombre' -> 'Juan Pérez'.
+localStorage.removeItem('nombre')               Elimina 'nombre' del localStorage.
+localStorage.clear()                            Borra todo lo guardado en localStorage.
 
-localStorage.getItem('edad')                              // Intenta recuperar 'edad' después de eliminarla -> null.
+Si llamas al valor de una clave con getItem tras eliminarlo, obtendrás un null.
 
-const coche = { marca: 'Toyota', modelo: 'Corolla', año: 2022 }
-localStorage.setItem('miCoche', JSON.stringify(coche))    // Guarda un objeto con la clave 'miCoche'.
+Para guardar objetos en esta base de datos necesitas hacer una conversión del objeto a un string JSON (JavaScript Object Notation). Cuidado porque un objeto convertido no puede ser utilizado como objeto. Para reconvertirlo en un objeto funcional utilizaremos parse.
 
-const cocheGuardado = JSON.parse(localStorage.getItem('miCoche'))  
-// Recupera y convierte el objeto de JSON a objeto usable.
+const persona = { nombre: 'Ana', edad: 30 }
 
-cocheGuardado.marca   // 'Toyota'  -> Accede a la propiedad 'marca' del objeto recuperado.
+JSON.stringify(persona)                         Convierte el objeto en un string JSON. (Se ha de almacenar en una variable)
+.setItem('persona', JSON.stringify(persona))    Guarda un objeto como string JSON.
+JSON.parse(localStorage.getItem('persona')      Recupera el objeto guardado y lo convierte de JSON a objeto usable.
 
-localStorage.removeItem('miCoche')                        // Borra 'miCoche' del localStorage.
-
-localStorage.getItem('miCoche')                           // Intenta recuperar 'miCoche' después de eliminarlo -> null.
 */
