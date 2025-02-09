@@ -136,13 +136,17 @@ inputNode.addEventListener('input', (event) => {
 });
 
 function reloadSession() {
-  Object.values(localStorage).forEach((task) => {
-    if (Number(task)) {
-      return;
-    }
-    const taskConvert = JSON.parse(task);
-    createTaskNode(taskConvert);
-  });
+  for (let i = 1; i <= counterInLocal; i++) {
+    Object.values(localStorage).forEach((task) => {
+      if (Number(task)) {
+        return;
+      }
+      const taskConvert = JSON.parse(task);
+      if (taskConvert.id === i) {
+        createTaskNode(taskConvert);
+      }
+    });
+  }
 }
 
 reloadSession();
