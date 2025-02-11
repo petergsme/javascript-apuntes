@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date('2025-01-04T15:21:38.207Z');
-const date2 = new Date('2025-01-04T15:25:38.207Z');
+const date1 = new Date("2025-01-04T15:21:38.207Z");
+const date2 = new Date("2025-01-04T15:25:38.207Z");
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
-  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
-  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
-  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
-  { title: 'El señor de los anillos', category: 'fantasy', read: true },
+  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
+  { title: "La venganza de Xindasvinto", category: "history", read: true },
+  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
+  { title: "Arcanum ilimitado", category: "fantasy", read: false },
+  { title: "El señor de los anillos", category: "fantasy", read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector('#dog-list');
+  const dogList = document.querySelector("#dog-list");
 
-  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  const isAnyFilterSelected = document.querySelector(".filter-selected");
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector('#like-filter');
+const likeFilterButton = document.querySelector("#like-filter");
 
-likeFilterButton.addEventListener('click', function () {
-  likeFilterButton.classList.toggle('filter-selected');
+likeFilterButton.addEventListener("click", function () {
+  likeFilterButton.classList.toggle("filter-selected");
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector('#dislike-filter');
+const dislikeFilter = document.querySelector("#dislike-filter");
 
-dislikeFilter.addEventListener('click', function () {
-  dislikeFilter.classList.toggle('filter-selected');
+dislikeFilter.addEventListener("click", function () {
+  dislikeFilter.classList.toggle("filter-selected");
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
-  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
+  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
 
-  document.querySelectorAll('.card').forEach((dogCard) => {
+  document.querySelectorAll(".card").forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = '';
+      dogCard.style.display = "";
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector('.like-count').innerText;
-    if (likeCount !== '' && isLikeFilterSelected) {
-      dogCard.style.display = '';
+    const likeCount = dogCard.querySelector(".like-count").innerText;
+    if (likeCount !== "" && isLikeFilterSelected) {
+      dogCard.style.display = "";
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
-    if (dislikeCount !== '' && isDislikeSelected) {
-      dogCard.style.display = '';
+    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
+    if (dislikeCount !== "" && isDislikeSelected) {
+      dogCard.style.display = "";
       return;
     }
 
-    dogCard.style.display = 'none';
+    dogCard.style.display = "none";
   });
 }
 
@@ -329,5 +329,34 @@ const persona = { nombre: 'Ana', edad: 30 }
 JSON.stringify(persona)                         Convierte el objeto en un string JSON. (Se ha de almacenar en una variable)
 .setItem('persona', JSON.stringify(persona))    Guarda un objeto como string JSON.
 JSON.parse(localStorage.getItem('persona')      Recupera el objeto guardado y lo convierte de JSON a objeto usable.
+
+
+*Es mejor hacer copias de los objetos que modificarlos directamente. No toques el objeto con el que trabajas:
+*/
+
+function editTask(taskId, propsToChange) {
+  // coger el nuevo objeto tarea
+  // buscar la posición que ocupa en el array
+  // modificar la tarea en el array
+  // meter el array en el local Storage
+  const taskIndex = taskList.findIndex((task) => {
+    return taskId === task.id;
+  });
+
+  taskList[taskIndex] = {
+    ...tasks[taskIndex],
+    ...propsToChange,
+  };
+
+  console.log(tasks);
+  saveTasks();
+}
+
+/*
+
+LAS PROMESAS
+
+Las promesas sirven para gestionar código asíncrono, código que, en algún momento se va a ejecutar. Su uso más común es hacer una llamada a servidor, mi código hace una llamada pero se espera a que el servidor se la devuelva.
+
 
 */
