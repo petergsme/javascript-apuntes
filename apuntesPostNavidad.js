@@ -284,12 +284,14 @@ Las funciones de los addEventListeners tienen un parámetro que solemos dejar en
 
 event.preventDefault()      Evita aplicar el comportamiento por defecto del navegador provocado indirectamente por un evento.
 
-*Hay algunas propiedades comunes a la mayoría de eventos. Cuando utilices eventos nuevos, pide un console log del mismo para conocer sus propiedades y saber qué contienen. Solo así sabrás como acceder a ello en tu código.
+*Esto puede ser útil para evitar que una página se recargue al enviar un formulario, comportamiento por defecto del submit.
+
+*Hay algunas propiedades comunes a la mayoría de eventos. Cuando utilices eventos nuevos, pide un console.log del mismo para conocer sus propiedades y saber qué contienen. Solo así sabrás como acceder a ello en tu código.
 
 *Dentro de una etiqueta form en HTML, todos sus botones hacen de submit del formulario.
 
 
-Los eventos se propagan de abajo hacia arriba. Esto se conoce como EVENT BUBBLING. Si por algún motivo necesitas evitar que un evento se propage hacia su padre puedes usar el parámetro event del listener junto con la siguiente función:
+Los eventos se propagan de abajo hacia arriba. Esto se conoce como EVENT BUBBLING. Si por algún motivo necesitas evitar que un evento se propague hacia su padre puedes usar el parámetro "event" del listener junto con la siguiente función:
 
 event.stopPropagation();
 
@@ -302,7 +304,7 @@ document.querySelector('[placeholder="Escribe tu tarea"]')    pseudoselector de 
 
 PÍLDORA SOBRE FORMULARIOS
 
-event.target                      Target es una propiedad del obj. event que hace referencia al elemento que disparó el evento.
+event.target                      Target es una propiedad del obj. "event" que hace referencia al elemento que disparó el evento.
 
 new FormData(event.target);       Objeto que recopila los valores de un formulario sin necesidad de acceder a cada input.
 formData.get('nameDelInput');     Obtiene el valor de un input del formulario a través de su propiedad name.

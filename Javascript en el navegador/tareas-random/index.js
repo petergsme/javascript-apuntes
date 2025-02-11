@@ -21,10 +21,11 @@ function getRandomArray() {
 }
 
 function regenerateArray() {
-  const tasks = getRandomArray();
+  const taskList = getRandomArray();
   document.querySelector('#tasks').innerHTML = '';
+  localStorage.clear(); // Regenerar el array limpia el localStorage.
 
-  tasks.forEach((task) => {
+  taskList.forEach((task) => {
     createTaskNode(task, true);
   });
 }
@@ -39,12 +40,12 @@ function createTaskNode(task, addToEnd) {
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
     <button class="${task.isFav ? 'fav' : ''}" style="opacity:0">${task.isFav ? '💝' : '💔'}</button>`;
 
-  const tasksNode = document.querySelector('#tasks');
+  const taskListNode = document.querySelector('#tasks');
 
   if (addToEnd) {
-    tasksNode.appendChild(taskNode);
+    taskListNode.appendChild(taskNode);
   } else {
-    tasksNode.prepend(taskNode);
+    taskListNode.prepend(taskNode);
   }
 
   taskNode.addEventListener('click', () => {
@@ -70,11 +71,15 @@ function createTaskNode(task, addToEnd) {
     localStorage.setItem(`tarea${task.id}`, JSON.stringify(taskInLocal));
   });
 
-  favButton.addEventListener('mouseover', (event) => {
+  // ¿Por qué setItem no mueve la clave en localStorage cuando actualizo una tarea? técnicamente no es la misma tarea.
+
+  // Porque setItem no borra y vuelve a crear la clave, solo actualiza su valor. localStorage no mantiene un orden basado en el tiempo de modificación, sino en cómo el navegador lo maneja internamente. Para mantener el orden, es mejor usar un array dentro de una sola clave.
+
+  favButton.addEventListener('mouseover', () => {
     favButton.style.opacity = 1;
   });
 
-  favButton.addEventListener('mouseout', (event) => {
+  favButton.addEventListener('mouseout', () => {
     favButton.style.opacity = 0;
   });
 } //Esta función toma de parámetro si debe añadir o no la tarea al final del array, y la tarea en cuestion a añadir. Si te fijas al acceder a su innerHTML los valores de la tarea son las propiedades del parámetro correspondiente a la tarea.
@@ -85,7 +90,7 @@ function addTask(addToEnd) {
 } // Esta función es algo redundante, los eventlistener podrian utilizar createTaskNode(generateRandomTask(), true); La única ventaja de hacerlo con addTask es que es más semántico, pero es un poco lioso.
 
 // Event listeners para que los botones llamen a las funciones anteriores
-document.querySelector('#regenate').addEventListener('click', () => {
+document.querySelector('#regenerate').addEventListener('click', () => {
   regenerateArray();
 });
 
@@ -98,13 +103,15 @@ document.querySelector('#add-last').addEventListener('click', () => {
 });
 
 let counter = 0;
-
 const counterInLocal = localStorage.getItem('counter');
+
 if (counterInLocal > 1) {
   counter = counterInLocal;
 }
 
-document.querySelector('#create-task').addEventListener('submit', (event) => {
+const formNode = document.querySelector('#create-task');
+
+formNode.addEventListener('submit', (event) => {
   event.preventDefault(); // Enviar un formulario recarga la página, esto lo evita.
 
   const formData = new FormData(event.target);
@@ -121,7 +128,7 @@ document.querySelector('#create-task').addEventListener('submit', (event) => {
     id: counter,
   };
   createTaskNode(newTask);
-  document.querySelector('#create-task').reset();
+  formNode.reset();
 
   localStorage.setItem('counter', counter);
 
@@ -141,9 +148,9 @@ function reloadSession() {
       if (Number(task)) {
         return;
       }
-      const taskConvert = JSON.parse(task);
-      if (taskConvert.id === i) {
-        createTaskNode(taskConvert);
+      const taskObject = JSON.parse(task);
+      if (taskObject.id === i) {
+        createTaskNode(taskObject);
       }
     });
   }
