@@ -23,6 +23,36 @@ function clearWarningText() {
 
 /*
 
+FUNCIONES PARA EL DESPLEGABLE CON OPCIONES DE RAZAS
+
+*/
+
+async function populateSelect() {
+  const dogBreedList = await getDogBreedList();
+  const dogBreedArray = Object.keys(dogBreedList);
+
+  const selectNode = document.querySelector('[name = "select"]');
+
+  dogBreedArray.forEach((breed) => {
+    const breedNode = document.createElement("option");
+    breedNode.value = `${breed}`;
+    breedNode.innerText = `${breed}`;
+
+    selectNode.appendChild(breedNode);
+  });
+}
+
+populateSelect();
+
+let breedToAdd = "briard";
+
+const selectNode = document.querySelector('[name = "select"]');
+selectNode.addEventListener("change", (event) => {
+  breedToAdd = event.target.value;
+});
+
+/*
+
 FUNCIONES BÁSICAS PARA AÑADIR PERRICOS Y DAR LISTENERS A LOS BOTONES DE SUS TARJETAS QUE AÑADAN VOTOS.
 
 */
@@ -50,8 +80,20 @@ function renderPerricoArray() {
   });
 }
 
+function disableAllAddPerricoButtons() {
+  document.querySelectorAll("button").forEach((buttonNode) => {
+    buttonNode.disabled = true;
+  });
+}
+
+function enableAllAddPerricoButtons() {
+  document.querySelectorAll("button").forEach((buttonNode) => {
+    buttonNode.disabled = false;
+  });
+}
+
 const addPerrico = async (image, addToStart) => {
-  const perricoImg = await getRandomDogImage();
+  const perricoImg = await getRandomDogImage(breedToAdd);
 
   const dogList = document.querySelector("#dog-list");
 
@@ -85,24 +127,32 @@ LISTENERS DE LOS BOTONES QUE AÑADEN PERRICOS.
 
 */
 
-document.querySelector("#add-1-perrico").addEventListener("click", () => {
-  addPerrico();
+document.querySelector("#add-1-perrico").addEventListener("click", async () => {
   clearWarningText();
+
+  disableAllAddPerricoButtons();
+  await addPerrico();
+  enableAllAddPerricoButtons();
 });
 
-document.querySelector("#add-perrico-start").addEventListener("click", function () {
-  addPerrico(false, true);
+document.querySelector("#add-perrico-start").addEventListener("click", async function () {
   clearWarningText();
+
+  disableAllAddPerricoButtons();
+  await addPerrico(false, true);
+  enableAllAddPerricoButtons();
 });
 
-document.querySelector("#add-5-perrico").addEventListener("click", function () {
+document.querySelector("#add-5-perrico").addEventListener("click", async function () {
   clearWarningText();
 
+  disableAllAddPerricoButtons();
   addPerrico();
   addPerrico();
   addPerrico();
   addPerrico();
-  addPerrico();
+  await addPerrico(); // Esto no funciona, habría que usar promiseAll. Aquí se llaman en orden, pero la quinta podría terminar su ejecución antes de la segunda y este enfoque no funcionaría.
+  enableAllAddPerricoButtons();
 });
 
 /*

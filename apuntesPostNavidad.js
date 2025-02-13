@@ -358,5 +358,14 @@ LAS PROMESAS
 
 Las promesas sirven para gestionar código asíncrono, código que, en algún momento se va a ejecutar. Su uso más común es hacer una llamada a servidor, mi código hace una llamada pero se espera a que el servidor se la devuelva.
 
+await       pausa la ejecucion de la función hasta que la promesa se cumple, o falla. Solo funciona dentro de funciones asíncronas.
+async       marca una función como asíncrona.
+
+Promise.all(iterable);    Una Promise que se cumplirá cuando todas las promesas del argumento iterable hayan sido cumplidas, o bien 
+                          se rechazará cuando alguna de ellas se rechace.
+
+Los endpoints de una API son sus URLs cada endpoint devuelve algo distinto. Los apis tienen diferentes grupos de objetos que llamaremos entidades.
+
+Las funciones con async y await solo puede llamarse dentro de otras funcionas igualmente asíncronas. Necesitas operar con tus datos desde esos confines. Una función normal puede incorporarse dentro de una asíncrona pero no al revés.
 
 */
