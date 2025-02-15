@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date("2025-01-04T15:21:38.207Z");
-const date2 = new Date("2025-01-04T15:25:38.207Z");
+const date1 = new Date('2025-01-04T15:21:38.207Z');
+const date2 = new Date('2025-01-04T15:25:38.207Z');
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
-  { title: "La venganza de Xindasvinto", category: "history", read: true },
-  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
-  { title: "Arcanum ilimitado", category: "fantasy", read: false },
-  { title: "El señor de los anillos", category: "fantasy", read: true },
+  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
+  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
+  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
+  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
+  { title: 'El señor de los anillos', category: 'fantasy', read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector("#dog-list");
+  const dogList = document.querySelector('#dog-list');
 
-  const isAnyFilterSelected = document.querySelector(".filter-selected");
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector("#like-filter");
+const likeFilterButton = document.querySelector('#like-filter');
 
-likeFilterButton.addEventListener("click", function () {
-  likeFilterButton.classList.toggle("filter-selected");
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector("#dislike-filter");
+const dislikeFilter = document.querySelector('#dislike-filter');
 
-dislikeFilter.addEventListener("click", function () {
-  dislikeFilter.classList.toggle("filter-selected");
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
-  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
 
-  document.querySelectorAll(".card").forEach((dogCard) => {
+  document.querySelectorAll('.card').forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = "";
+      dogCard.style.display = '';
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector(".like-count").innerText;
-    if (likeCount !== "" && isLikeFilterSelected) {
-      dogCard.style.display = "";
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
-    if (dislikeCount !== "" && isDislikeSelected) {
-      dogCard.style.display = "";
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
       return;
     }
 
-    dogCard.style.display = "none";
+    dogCard.style.display = 'none';
   });
 }
 
@@ -356,16 +356,48 @@ function editTask(taskId, propsToChange) {
 
 LAS PROMESAS
 
-Las promesas sirven para gestionar código asíncrono, código que, en algún momento se va a ejecutar. Su uso más común es hacer una llamada a servidor, mi código hace una llamada pero se espera a que el servidor se la devuelva.
+Las promesas permiten crear/gestionar/utilizar código asíncrono. Se trata de código que no se ejecuta a la vez, código que depende una respuesta externa, como hacer una llamada a servidor. Al hacer una llamada a un servidor mi código normalmente seguiría ejecutandose en orden, pero en algún otro lugar el código del servidor estaría también ejecutandose para enviar una respuesta a mi petición. Si mi código utiliza una variable cuyo valor depende de la respuesta que ese servidor externo debe enviarme, ese pedazo de mi código no debe seguir su ejecucion hasta obtener esa respuesta.
 
-await       pausa la ejecucion de la función hasta que la promesa se cumple, o falla. Solo funciona dentro de funciones asíncronas.
-async       marca una función como asíncrona.
+Esto permite que se ejecuten varias operaciones a la vez sin parar mi código. En caso contrario hasta que una operación no hubiera terminado no podríamos hacer otra cosa, porque en javascript el código es secuencial.
+
+fetch();    hace llamada a servidor, una promesa.
+
+async       Anuncia que una función contiene código asíncrono.
+await       Pausa la ejecución de una función en una promesa. Hasta no obtener una respuesta, el código que sigue no se ejecuta,
+            ya que depende de la promesa. Todo ese código es lo que llamamos código asíncrono.
+
+*Alguna función suelta no permite utilizar código asíncrono.
+*Ten cuidado con todo lo que se ejecuta trás una función con código asíncrono pero fuera de ella y que depende de su compleción. Podrías estar intentando acceder a código que aún no ha terminado su ejecución asíncrona. La manera de solucionarlo sería utilizar await y async dentro de esa ejecución para no ejecutar el código tras tu función con código asíncrono hasta que la misma no haya terminado su ejecución.
+
+¿QUÉ PASA SI EL SERVIDOR FALLA?
+
+try {} catch(error) {}    Mecanismos para que si algo falla tu puedas hacer algo con ese código. Van de la mano con awaits.
+
+El código dentro de TRY se ejecuta línea a línea. En caso de ocurrir un error que pare su ejecución, salta al error y se ejecuta SU código. La clave está en que gracias a try & catch, el resto de tu código sí que intentará ejecutarse. Normalmente un error detiene el código y todo lo que sigue no se ejecuta. Es una manera de aislar funciones susceptibles de fallar del resto del código.
+
+Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta el código se ejecutaría de manera normal. Pero, ¿Y si la respuesta es que no ha podido enviar respuesta? En ese caso habría que comprobar qué ha respondido el servidor y en caso de ser una negativa, lanzar un erro manual utilizando "throw new Error();":
+
+if (!response.ok) {
+  throw new Error(`Response status: ${response.status}`);
+}
+
+const json = await response.json();
+
+return json.message;
+
+
+.json()                   Convierte la respuesta del servidor en un objeto con el que podemos trabajar.
+.ok                       Es una propiedad de las respuestas de servidor, sirve para comprobar si todo ha ido bien.
+
+Se puede propagar un error hacia fuera si quieres que se pare la ejecución, la manera es metiendo otro throw Error dentro del catch. También podrías controlar de otras maneras el fallo del servidor utilizando try/catch en alguna otra función o algún otro metodo mas sencillo.
 
 Promise.all(iterable);    Una Promise que se cumplirá cuando todas las promesas del argumento iterable hayan sido cumplidas, o bien 
                           se rechazará cuando alguna de ellas se rechace.
 
-Los endpoints de una API son sus URLs cada endpoint devuelve algo distinto. Los apis tienen diferentes grupos de objetos que llamaremos entidades.
+Los ENDPOINTS de una API son sus URLs. Cada endpoint devuelve algo distinto.
+Los apis tienen diferentes grupos de objetos que llamaremos ENTIDADES.
 
 Las funciones con async y await solo puede llamarse dentro de otras funcionas igualmente asíncronas. Necesitas operar con tus datos desde esos confines. Una función normal puede incorporarse dentro de una asíncrona pero no al revés.
+
 
 */

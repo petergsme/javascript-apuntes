@@ -1,3 +1,5 @@
+// LA FUNCIÓN QUE RECUPERA LAS TAREAS DE MEMORIA SI LAS HUBIERA.
+
 function getTasks() {
   const tasksAsString = localStorage.getItem('tasks');
 
@@ -10,6 +12,8 @@ function getTasks() {
 
 const tasks = getTasks();
 let isCompletedFilterSelected = localStorage.getItem('isCompletedFilter') === 'true';
+
+// LA FUNCIÓN QUE SE ENCARGA DE QUE LA PÁGINA CARGUE CON LOS DATOS DEL LOCALSTORAGE.
 
 function renderTasksArray() {
   const completedFilterButtonNode = document.querySelector('#completed-filter');
@@ -33,19 +37,14 @@ function renderTasksArray() {
   });
 }
 
+// LA FUNCIÓN QUE USAREMOS PARA ACTUALIZAR LOS DATOS DE UNA TAREA EN LOCAL TRAS MODIFICARLA.
+
 function saveTasks() {
   const tasksAsString = JSON.stringify(tasks);
   localStorage.setItem('tasks', tasksAsString);
 }
 
 renderTasksArray();
-/**
-   const task = {
-    isFav: false,
-   };
-  
-
- */
 
 function editTask(taskId, propsToChange) {
   // coger el nuevo objeto tarea
@@ -57,27 +56,17 @@ function editTask(taskId, propsToChange) {
   });
   tasks[taskIndex] = {
     ...tasks[taskIndex],
-    ...propsToChange
+    ...propsToChange,
   };
   console.log(tasks);
   saveTasks();
 }
 
-/** Otra forma de hacerlo, esta vez por propName  */
-function editTaskByPropName(taskId, propName, propValue) {
-  // coger el nuevo objeto tarea
-  // buscar la posición que ocupa en el array
-  // modificar la tarea en el array
-  // meter el array en el local Storage
-  const taskIndex = tasks.findIndex((task) => {
-    return taskId === task.id;
-  });
-  tasks[taskIndex][propName] = propValue;
-  saveTasks();
-}
+// LA FUNCIÓN PRINCIPAL.
 
 function createTaskNode(task, addToEnd) {
   const taskNode = document.createElement('div');
+  //.createElement() sirve para crear elementos dinámicamente antes de agregarlos al DOM con algún append.
   taskNode.className = 'task';
 
   taskNode.innerHTML = `
@@ -101,7 +90,6 @@ function createTaskNode(task, addToEnd) {
     taskNode.querySelector('.status').innerText = isCurrentlyCompleted ? 'pending' : 'completed';
 
     editTask(task.id, { isCompleted: !isCurrentlyCompleted });
-    editTaskByPropName(task.id, 'isCompleted', !isCurrentlyCompleted);
   });
 
   const favButtonNode = taskNode.querySelector('button');
@@ -111,23 +99,28 @@ function createTaskNode(task, addToEnd) {
     favButtonNode.classList.toggle('fav');
     favButtonNode.innerText = isCurrentlyFav ? '💔' : '💝';
 
-    editTask(task.id, { isFav: !isCurrentlyFav, pepito: 'tasd' });
+    editTask(task.id, { isFav: !isCurrentlyFav });
   });
 }
 
+// EL LISTENER DEL SUBMIT PARA CREAR TAREAS.
+
 const formButton = document.querySelector('#create-task button');
 document.querySelector('#create-task').addEventListener('submit', function (event) {
-  console.log(event);
-  event.preventDefault();
+  event.preventDefault(); // Enviar un formulario recarga la página, esto lo evita.
 
   const formData = new FormData(event.target);
+  // FormData es un objeto de JavaScript que permite recolectar los valores de un formulario de forma sencilla sin acceder a cada input individualmente.
   const taskText = formData.get('taskText');
+  // .get("nombreDelCampo") obtiene el valor de un campo del formulario.
+
   const task = {
     text: taskText,
     isFav: false,
     isCompleted: false,
-    id: Date.now()
+    id: Date.now(),
   };
+
   if (!isCompletedFilterSelected) {
     createTaskNode(task, false);
   }
@@ -139,11 +132,14 @@ document.querySelector('#create-task').addEventListener('submit', function (even
   formButton.disabled = true;
 });
 
+// EL LISTENER DEL CAMPO DE TEXTO DEL FORMULARIO.
+
 const taskTextNode = document.querySelector('[name=taskText]');
 taskTextNode.addEventListener('input', function (event) {
-  console.log(event.target.value);
   formButton.disabled = event.target.value === '';
 });
+
+// EL LISTENER DEL BOTÓN QUE FILTRA.
 
 const completedFilterButtonNode = document.querySelector('#completed-filter');
 completedFilterButtonNode.addEventListener('click', function () {
@@ -151,3 +147,7 @@ completedFilterButtonNode.addEventListener('click', function () {
   renderTasksArray();
   localStorage.setItem('isCompletedFilter', isCompletedFilterSelected);
 });
+
+// ¿Por qué setItem no mueve la clave en localStorage cuando actualizo una tarea? técnicamente no es la misma tarea.
+
+// Porque setItem no borra y vuelve a crear la clave, solo actualiza su valor. localStorage no mantiene un orden basado en el tiempo de modificación, sino en cómo el navegador lo maneja internamente. Para mantener el orden, es mejor usar un array dentro de una sola clave.
