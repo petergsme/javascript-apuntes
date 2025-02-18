@@ -399,6 +399,7 @@ Los apis tienen diferentes grupos de objetos que llamaremos ENTIDADES.
 
 Las funciones con async y await solo puede llamarse dentro de otras funcionas igualmente asíncronas. Necesitas operar con tus datos desde esos confines. Una función normal puede incorporarse dentro de una asíncrona pero no al revés.
 
+
 EJERCICIO DE LOS PERRICOS, SELECT, Y LOS FILTRADOS.
 
 Para filtros, en vez de ocultar es mejor borrar y luego añadir. Redefine tu contenido en lugar de meter parches y más parches.
@@ -406,4 +407,45 @@ Para filtros, en vez de ocultar es mejor borrar y luego añadir. Redefine tu con
 Lo de tomar la respuesta de un API, para construir ya un objeto de una manera desde la propia respuesta es interesante para nuestro proyecto, aunque aun no estoy seguro.
 
 
+EL "THIS".
+
+this      
+
+Se trata de una palabra reservada que representa cosas diferentes en función de donde la estemos utilizando. Dentro de un eventListener se refiere al elemento que lleva el listener, pero hay una excepción: con funciones flecha el "THIS" pilla el elemento del contexto superior desde donde está declarada esa función flehca (Esto no sucede con la función clásica).
+
+"THIS" permite acceder a los datos del elemento que lo contiene, por ejemplo un objeto. Si almacenas el valor de ese "THIS" interno en una variable sería como guardar la referencia a ese objeto, podrías usarla dinamicamente para ir cambiando una variable y accediendo a los valores de un objeto.
+
+OTRA MANERAS DE CREAR OBJETOS (CON THIS)
 */
+
+function Dog(name, breed) {
+  this.name = name;
+  this.breed = breed;
+  this.greetings = () => {
+    console.log(`Hola, soy un ${this.breed} llamado ${this.name}`);
+  };
+}
+
+/*
+Si usas una función con "NEW", si la llamas con ese "NEW", su "THIS" interno ya no tomará el "WINDOW", se tomará a sí mismo.
+
+CREAR OBJETOS CON CLASS
+
+class
+constructor(){}
+
+"CLASS" funciona igualmente de constructor pero es más sencillo a la vista:
+
+ */
+class Dog {
+  constructor(name, breed) {
+    this.name = name;
+    this.breed = breed;
+  }
+
+  greetings() {
+    console.log(`Hola, soy un ${this.breed} llamado ${this.name}`);
+  }
+}
+
+/* */
