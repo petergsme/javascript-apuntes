@@ -580,4 +580,13 @@ Aparecerá un enlace local.
 
 *Recuerda que cada vez que quieras trabajar en tu proyecto, si no estas abriendo su carpeta, deberas escribir cd nombrecarpeta y npm run dev. Es recomendable que abras directamente la carpeta del proyecto para evitar líos.
 
+----------------------------------------------
+
+ESTRUCTURA DE UN PROYECTO DE REACT
+
+node_modules   cositas para funcionar.
+index.css      estilos generales de mi proyecto.
+main.jsx       documento principal.
+app.jsx        punto de entrada de nuestro proyecto, el codigo se ejecuta desde aquí.
+
 */
