@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date('2025-01-04T15:21:38.207Z');
-const date2 = new Date('2025-01-04T15:25:38.207Z');
+const date1 = new Date("2025-01-04T15:21:38.207Z");
+const date2 = new Date("2025-01-04T15:25:38.207Z");
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
-  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
-  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
-  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
-  { title: 'El señor de los anillos', category: 'fantasy', read: true },
+  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
+  { title: "La venganza de Xindasvinto", category: "history", read: true },
+  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
+  { title: "Arcanum ilimitado", category: "fantasy", read: false },
+  { title: "El señor de los anillos", category: "fantasy", read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector('#dog-list');
+  const dogList = document.querySelector("#dog-list");
 
-  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  const isAnyFilterSelected = document.querySelector(".filter-selected");
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector('#like-filter');
+const likeFilterButton = document.querySelector("#like-filter");
 
-likeFilterButton.addEventListener('click', function () {
-  likeFilterButton.classList.toggle('filter-selected');
+likeFilterButton.addEventListener("click", function () {
+  likeFilterButton.classList.toggle("filter-selected");
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector('#dislike-filter');
+const dislikeFilter = document.querySelector("#dislike-filter");
 
-dislikeFilter.addEventListener('click', function () {
-  dislikeFilter.classList.toggle('filter-selected');
+dislikeFilter.addEventListener("click", function () {
+  dislikeFilter.classList.toggle("filter-selected");
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
-  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
+  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
 
-  document.querySelectorAll('.card').forEach((dogCard) => {
+  document.querySelectorAll(".card").forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = '';
+      dogCard.style.display = "";
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector('.like-count').innerText;
-    if (likeCount !== '' && isLikeFilterSelected) {
-      dogCard.style.display = '';
+    const likeCount = dogCard.querySelector(".like-count").innerText;
+    if (likeCount !== "" && isLikeFilterSelected) {
+      dogCard.style.display = "";
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
-    if (dislikeCount !== '' && isDislikeSelected) {
-      dogCard.style.display = '';
+    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
+    if (dislikeCount !== "" && isDislikeSelected) {
+      dogCard.style.display = "";
       return;
     }
 
-    dogCard.style.display = 'none';
+    dogCard.style.display = "none";
   });
 }
 
@@ -382,7 +382,7 @@ Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta 
 */
 
 async function getDogBreedList() {
-  const url = 'https://dog.ceo/api/breeds/list/all';
+  const url = "https://dog.ceo/api/breeds/list/all";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -463,4 +463,116 @@ class Dog {
   }
 }
 
-/* */
+/*
+
+----------------------------------------------
+
+EMPEZAMOS CON REACT (TYPESCRIPT EN EL FUTURO)
+
+*Los strings con comillas invertidas en los que metamos variables, se llaman template literals.
+
+&& y || EN ASIGNACIONES
+
+&&      si el valor del primer argumento es verdadero, devuelve el segundo argumento. Si es falso, devuelve el primero. 
+||      si el valor del primer argumento es verdadero, devuelve el primer argumento. Si es falso, devuelve el segundo.
+
+*Cuando decimos equivalente, queremos decir que ese valor utilizado como boolean se evalua como true o false. Por ejemplo, una cadena de texto no vacía es true.
+*En asignaciones ya no compruebas si los valores son true, para hacerlo usarias boolean(varA && varB).
+
+*Recuerda, puedes asignar valores por defecto a parámetros en funciones.
+
+----------------------------------------------
+
+PROPERTY SHORTHAND
+
+const name = "pepe";
+
+const loquito = {
+  name
+};
+
+No hace falta poner name: name;
+
+----------------------------------------------
+
+DESESTRUCTURACIÓN DE OBJETOS.
+
+'const { nombre, apellido, edad, sexo } = persona;'
+
+La desestructuración de objetos sirve para extraer las propiedades de un objeto y asignarlas a variables con sus mismos nombres. La ventaja es que no necesitas llamar a las propiedades con objeto.propiedad, puedes escribir el nombre de la propiedad directamente. Es como si hubieras escrito:
+
+const apellido = persona.apellido;  --> en su lugar usarías "apellido"
+const sexo = persona.sexo;          --> en su lugar usarías "sexo"
+
+*Podrías asignar valores por defecto durante la desestructuración, así si persona no tuviera alguna de las propiedades, las variables tendrían un valor predeterminado.
+*Cuidado, si quieres desestructurar dos objetos que tienen una propiedad que se llama igual tendras que cambiar el nombre de una de ellas así:
+
+const {job: job2} = objeto      De este modo, job: job2, dices que tome valor de job de objeto pero lo ponga en job2 en vez de job.
+
+const {person: {name}} = persona    Con esto desestructuras un nivel mas abajo, la propiedad name de person, a su vez de persona.
+
+*Todo esto puede usarse con arrays.
+
+----------------------------------------------
+
+SPREAD OPERATOR
+
+El spread operator tiene un problema cuando trabajamos con objetos. Por lo general al usarlo y modificar el objeto clonado, las propiedades del original no cambian. Pero si una de las propiedades del original que cambiamos tiene dentro un objeto, se cambiara para ambos. Esto sucede porque en estos casos el valor de esa propiedad no se clona, se lleva la referencia en memoria que apunta a ese objeto que contiene. Se soluciona así:
+
+const segundoObjeto = {...primerObjeto, skills{...primerObjeto.skills}}
+
+----------------------------------------------
+
+REST PROP
+
+Sirve para guardar el resto de propiedades en otro objeto que nombramos como queramos, en este caso rest.
+
+const { nombre, ...rest } = persona;
+
+rest = {
+  apellido
+  edad
+  sexo
+}
+
+----------------------------------------------
+
+??
+
+Solo se usa con null y undefined.
+
+const result = object1 ?? object2     Si el primero argumento no es null o unedefined, devuelve el primero, si no el segundo.
+
+----------------------------------------------
+
+OPTIONAL CHAINING - ?.
+
+Se utiliza siempre con propiedades de objetos.
+Cuando intento acceder a las propiedades de un objeto que resulta ser undefined o null, JS peta. Para evitar que pete, si le pones el interrogante, ya no peta, devuelve undefined.
+
+const isJosemi = (persona) => {
+  return persona.name === "Josemi";  
+}
+Aquí explota.
+
+const isJosemi = (persona) => {
+  return persona?.name === "Josemi";  
+}
+Aquí no explota.
+
+----------------------------------------------
+
+REACT
+
+Para empezar con react hay que montar un proyecto en react. Estaremos ejecutando un servidor de node en nuestro ordenador, para facilitar el desarrollo con React. Nos permitirá ver los cambios que hagamos en tiempo real. Vamos a escribir un código diferente al que el navegador tendrá que ejecutar. Vite se encargará de hacer esa traducción. 
+
+Empezamos creando una nueva carpeta en un sitio que no sea el escritorio, y abrimos el terminal en visual studio.
+
+Instalamos Vite en la carpeta en la que estamos o queremos instalarlo.
+
+npm create vite@latest .               instala en la carpeta actual
+npm create vite@latest ReactProject    instala en la carpeta ReactProject, subcarpeta de la carpeta actual.
+
+Escribiendo cd en el terminal seguido del nombre de una subcarpeta, mueves las opearaciones siguientes del terminal a ese lugar.
+
+*/
