@@ -573,6 +573,11 @@ Instalamos Vite en la carpeta en la que estamos o queremos instalarlo.
 npm create vite@latest .               instala en la carpeta actual
 npm create vite@latest ReactProject    instala en la carpeta ReactProject, subcarpeta de la carpeta actual.
 
-Escribiendo cd en el terminal seguido del nombre de una subcarpeta, mueves las opearaciones siguientes del terminal a ese lugar.
+Escribiendo cd en el terminal seguido del nombre de una subcarpeta, mueves las operaciones siguientes del terminal a ese lugar.
+No te preocupes, tras esa primera instalación te dirá qué comandos debes escribir para seleccionar la carpeta de instalación e instalar los paquetes restantes (npm install y npm run dev). 
+
+Aparecerá un enlace local.
+
+*Recuerda que cada vez que quieras trabajar en tu proyecto, si no estas abriendo su carpeta, deberas escribir cd nombrecarpeta y npm run dev. Es recomendable que abras directamente la carpeta del proyecto para evitar líos.
 
 */
