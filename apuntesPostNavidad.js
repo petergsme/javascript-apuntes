@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date("2025-01-04T15:21:38.207Z");
-const date2 = new Date("2025-01-04T15:25:38.207Z");
+const date1 = new Date('2025-01-04T15:21:38.207Z');
+const date2 = new Date('2025-01-04T15:25:38.207Z');
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
-  { title: "La venganza de Xindasvinto", category: "history", read: true },
-  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
-  { title: "Arcanum ilimitado", category: "fantasy", read: false },
-  { title: "El señor de los anillos", category: "fantasy", read: true },
+  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
+  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
+  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
+  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
+  { title: 'El señor de los anillos', category: 'fantasy', read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector("#dog-list");
+  const dogList = document.querySelector('#dog-list');
 
-  const isAnyFilterSelected = document.querySelector(".filter-selected");
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector("#like-filter");
+const likeFilterButton = document.querySelector('#like-filter');
 
-likeFilterButton.addEventListener("click", function () {
-  likeFilterButton.classList.toggle("filter-selected");
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector("#dislike-filter");
+const dislikeFilter = document.querySelector('#dislike-filter');
 
-dislikeFilter.addEventListener("click", function () {
-  dislikeFilter.classList.toggle("filter-selected");
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
-  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
 
-  document.querySelectorAll(".card").forEach((dogCard) => {
+  document.querySelectorAll('.card').forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = "";
+      dogCard.style.display = '';
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector(".like-count").innerText;
-    if (likeCount !== "" && isLikeFilterSelected) {
-      dogCard.style.display = "";
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
-    if (dislikeCount !== "" && isDislikeSelected) {
-      dogCard.style.display = "";
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
       return;
     }
 
-    dogCard.style.display = "none";
+    dogCard.style.display = 'none';
   });
 }
 
@@ -382,7 +382,7 @@ Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta 
 */
 
 async function getDogBreedList() {
-  const url = "https://dog.ceo/api/breeds/list/all";
+  const url = 'https://dog.ceo/api/breeds/list/all';
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -480,6 +480,8 @@ EMPEZAMOS CON REACT (TYPESCRIPT EN EL FUTURO)
 *En asignaciones ya no compruebas si los valores son true, para hacerlo usarias boolean(varA && varB).
 
 *Recuerda, puedes asignar valores por defecto a parámetros en funciones.
+
+Una expresión JavaScript && devuelve el valor de su lado derecho (en nuestro caso, la marca de verificación) si el lado izquierdo (nuestra condición) es true. Pero si la condición es false, toda la expresión se convierte en false. React considera false como un “agujero” en el árbol JSX, al igual que null o undefined, y no renderiza nada en su lugar.
 
 ----------------------------------------------
 
@@ -609,7 +611,7 @@ Tras crear un componente y almacenarlo en una variable, para usarlo deberas mete
 El return si devuelve mas de una linea de codigo debe ir entre parentesis. Y si devuelve mas de un elemento jsx tienes que agruparlo en un fragment (<> etiquetas vacias.)
 
 *Los nombres de componentes se escriben en mayúscula. SIEMPRE.
-*Si escribes on como propiedad de un elemento jsx te sugerirá todos los on que hay, son eventos.
+*Si escribes "on" como propiedad de un elemento jsx te sugerirá todos los on que hay, son eventos.
 *HandleAlgo es la convencion de nombrado de funciones para elementos jsx.
 
 Puedes meter las funciones en línea o como funcion aparte en funcion de si la vas a reutilizar o no.
@@ -646,4 +648,18 @@ import {MiPrimerComponente as Pepito} from './MiPrimerComponente.jsx';
 Cuando hagas componentes, harás una carpeta para cada uno. Y tendras una hoja de estilos especificas que impotaras en cada componente con import ./button.css
 
 Podrías meter en app solo un uikit, y dentro del uikit.jsx todos los componentes.
+
+App es toda tu web. React es una unión eficiente de js, html y css. creas componentes en ficheros especificos, les otorgar estilos de hojas especificas y usas una hoja general de estilos también.
+
+----------------------------------------------
+
+Del tutorial de REACT son importantes:
+
+En DESCRIBIR LA UI:
+-Pasar props a un componente
+-Renderizado condicional
+-renderizado de listas.
+-mantener tus componentes puros.
+
+Estoy super confundido con el modo de funcionar del puto React, hasta los cojones.
 */
