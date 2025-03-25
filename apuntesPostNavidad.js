@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date('2025-01-04T15:21:38.207Z');
-const date2 = new Date('2025-01-04T15:25:38.207Z');
+const date1 = new Date("2025-01-04T15:21:38.207Z");
+const date2 = new Date("2025-01-04T15:25:38.207Z");
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
-  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
-  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
-  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
-  { title: 'El señor de los anillos', category: 'fantasy', read: true },
+  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
+  { title: "La venganza de Xindasvinto", category: "history", read: true },
+  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
+  { title: "Arcanum ilimitado", category: "fantasy", read: false },
+  { title: "El señor de los anillos", category: "fantasy", read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector('#dog-list');
+  const dogList = document.querySelector("#dog-list");
 
-  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  const isAnyFilterSelected = document.querySelector(".filter-selected");
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector('#like-filter');
+const likeFilterButton = document.querySelector("#like-filter");
 
-likeFilterButton.addEventListener('click', function () {
-  likeFilterButton.classList.toggle('filter-selected');
+likeFilterButton.addEventListener("click", function () {
+  likeFilterButton.classList.toggle("filter-selected");
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector('#dislike-filter');
+const dislikeFilter = document.querySelector("#dislike-filter");
 
-dislikeFilter.addEventListener('click', function () {
-  dislikeFilter.classList.toggle('filter-selected');
+dislikeFilter.addEventListener("click", function () {
+  dislikeFilter.classList.toggle("filter-selected");
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
-  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
+  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
 
-  document.querySelectorAll('.card').forEach((dogCard) => {
+  document.querySelectorAll(".card").forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = '';
+      dogCard.style.display = "";
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector('.like-count').innerText;
-    if (likeCount !== '' && isLikeFilterSelected) {
-      dogCard.style.display = '';
+    const likeCount = dogCard.querySelector(".like-count").innerText;
+    if (likeCount !== "" && isLikeFilterSelected) {
+      dogCard.style.display = "";
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
-    if (dislikeCount !== '' && isDislikeSelected) {
-      dogCard.style.display = '';
+    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
+    if (dislikeCount !== "" && isDislikeSelected) {
+      dogCard.style.display = "";
       return;
     }
 
-    dogCard.style.display = 'none';
+    dogCard.style.display = "none";
   });
 }
 
@@ -382,7 +382,7 @@ Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta 
 */
 
 async function getDogBreedList() {
-  const url = 'https://dog.ceo/api/breeds/list/all';
+  const url = "https://dog.ceo/api/breeds/list/all";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -662,4 +662,46 @@ En DESCRIBIR LA UI:
 -mantener tus componentes puros.
 
 Estoy super confundido con el modo de funcionar del puto React, hasta los cojones.
+
+------------------------------------------------
+
+Los booleanos no se pintan en HTML con React, para pintarlos hay que usar String(false), convertir el boolean en un string.
+
+La propiedad children sirve para ponerle un hijo a tu componente. Se la tienes que indicar en las propiedades si las desestructuras, o
+ponerla dentro del elemento en el return. Luego simplemente se lo pones cuando metas el componente en otro lado.
+
+CICLO DE VIDA DEL COMPONENTE
+
+Aunque un oomponente se rerenderize el html asociado a ese componente no tiene por que cambiar necesariamente. La operacion mas costosa en una web es actualizar el HTML.
+
+-------------------------------------------------
+
+HOOKS
+
+Es una función de REACT. 
+
+USESTATE
+
+Variable de componente que sirve para:
+-no reiniciarse cuando el componente se rerenderice.
+-rerenderizar el componente al cambiar su valor.
+
+Debe ser importado, y se usa siempre d ela misma forma.
+
+const [nombrevariable, setNombrevariable] = useState(valorpordefecto);
+
+1er elem. --> valor variable
+2o elem. --> función para actualizar el valor, no se puede usar otra. ("setter" "modificador de la variable de estado").
+
+*Los hooks se tienen que declarar siempre en el primer nivel del componente.
+*useState(valorpordefecto) solo se ejecuta la primera vez que el componente se monta, no en el de actualización.
+*Puede haber varios en una misma función.
+*Su valor puede ser cualquier cosa, también un objeto.
+
+Lo utilizaremos cuando necesitemos almacenar informacion local, mostrar u ocultar informacion y gestionar estados asincronos.
+
+Intenta evitar los duplicados. Si tienes mas de una variable de estado piensalo un poquito mas.
+
+LEETE LOS APUNTES DEL NOTION, ESTÁS JODIDO.
+
 */

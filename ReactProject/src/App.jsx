@@ -1,28 +1,23 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { useState } from "react";
+
+// EJERCICIO: Boton añade tareas, conforme le des al boton vaya sumando, añadiendo tareas a un array.
 
 function App() {
+  const [tasksArray, setTasksArray] = useState([]);
+
+  const handleAddTask = () => {
+    setTasksArray([...tasksArray, `Tarea ${tasksArray.length + 1}`]);
+  };
+
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Rigoberto</h1>
-      <div className="card">
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div>
+      <button onClick={handleAddTask}>Add task</button>
+      <p>Tareas creadas: {tasksArray.length}</p>
+    </div>
   );
 }
+
 /*Esto es un componente de react. Un componente es una función que devuelve código similar al html. Todo el código html debe estar agrupado dentro de una etiqueta, puede ser algo semantico o estar vacío como en este caso.
 
 Otras diferencias con el html básico.
