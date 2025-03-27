@@ -704,4 +704,29 @@ Intenta evitar los duplicados. Si tienes mas de una variable de estado piensalo 
 
 LEETE LOS APUNTES DEL NOTION, ESTÁS JODIDO.
 
+-------------------------------------------------------------------
+
+TYPESCRIPT
+
+Añadido a javascript para forzar el tipado. (muy resumido)
+
+Al declarar una variable ts infiere del valor que le has dado que ese es su tipado y si intentas asignart un valor de otro tipo sera rechazado. Para asignar de verdad el tipo:
+
+let name: string | number = "pepito".
+let johny: String[] = ["a", "b"];     con los arrays siempre pon el tipo,salvo que ya tenga valores dentro.
+
+Intenta no hacer trabajo redundante, en el de arriba no haria falta poner varias opciones, solo string y para eso solo dale string de valor.
+
+Para objetos debes declarar un tipo nuevo con type o interface.
+
+type User = {
+  name: "joan" | "rob" | "carlos";
+  age: number;
+  isMurciano: boolean;
+}
+
+Se le puede dar un valor por defcto a alguna de las propiedades, en la desestructuración.
+
+Puedes poner propiedades opcionales con isMurciano?: boolean; Es lo que ya vimos del operador de interrogante que permite que las cosas sean undefined o null sin que js explote.
+
 */
