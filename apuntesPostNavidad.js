@@ -729,4 +729,8 @@ Se le puede dar un valor por defcto a alguna de las propiedades, en la desestruc
 
 Puedes poner propiedades opcionales con isMurciano?: boolean; Es lo que ya vimos del operador de interrogante que permite que las cosas sean undefined o null sin que js explote.
 
+-----------------------------------------
+
+TYPESCRIPT DE NUEVO
+
 */
