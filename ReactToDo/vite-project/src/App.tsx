@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react';
+import './App.css';
 
 interface Task {
   taskName: string;
@@ -10,7 +10,7 @@ interface Task {
 function App() {
   const [tasksArray, setTasksArray] = useState<Task[]>([]);
   // Esta es la manera de especificar un tipado en un useState.
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
 
   const addTask = (text: string) =>
     setTasksArray([

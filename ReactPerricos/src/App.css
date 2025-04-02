@@ -1,62 +1,82 @@
-/* PERRICOS */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 48px;
-}
+/* PERRICOS */
 
 .dog-list {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+  justify-content: center;
 }
 
 .dog {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  width: calc((100% - 96px) / 5);
-  box-shadow: 2px 8px 15px 0px rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
+  width: 250px;
+  text-align: center;
   padding: 24px;
-  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 2px 8px 15px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
 
   & img {
     width: 100%;
     border-radius: 5px;
+    margin-bottom: 24px;
   }
-}
 
-.like {
-  margin-right: 12px;
-
-  &:hover {
-    background-color: rgb(0, 190, 28);
-    border-color: green;
-    color: rgb(255, 255, 255);
-    transition: all 0.2s ease-in-out;
+  & span {
+    margin-bottom: 24px;
   }
-}
-
-.dislike:hover {
-  background-color: rgb(193, 0, 6);
-  border-color: red;
-  color: rgb(223, 223, 223);
-  transition: all 0.2s ease-in-out;
-}
-
-button {
-  color: rgb(0, 0, 0);
-  border: 2px solid rgb(175, 175, 175);
-  transition: all 0.2s ease-in-out;
 }
 
 .dog__votes {
   display: flex;
   gap: 12px;
   justify-content: center;
+}
+
+/* BUTTONS */
+
+button {
+  color: rgb(46, 46, 46);
+  background-color: rgb(230, 230, 230);
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.like {
+  margin-right: 12px;
+
+  &:hover {
+    background-color: rgb(43, 210, 68);
+    color: rgb(248, 248, 248);
+    border: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 25px 0px rgba(0, 255, 47, 0.8);
+  }
+}
+
+.dislike:hover {
+  background-color: rgb(218, 46, 51);
+  box-shadow: 0px 0px 25px 0px rgba(255, 0, 0, 0.8);
+  color: rgb(248, 248, 248);
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-button {
+  margin: 24px;
+
+  &:hover {
+    color: rgb(248, 248, 248);
+    background-color: rgb(56, 169, 255);
+  }
 }
