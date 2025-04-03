@@ -5,11 +5,12 @@ function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-import { DogResponse } from './model/Dogs';
+import { DogResponse } from "./model/Dogs";
+import { AllBreedsResponse } from "./model/Dogs";
 
 export async function getRandomDogImage(breed: string): Promise<DogResponse | undefined> {
   const url =
-    breed === '' ? 'https://dog.ceo/api/breeds/image/random' : `https://dog.ceo/api/breed/${breed}/images/random`;
+    breed === "" ? "https://dog.ceo/api/breeds/image/random" : `https://dog.ceo/api/breed/${breed}/images/random`;
 
   try {
     const response = await fetch(url);
@@ -17,9 +18,9 @@ export async function getRandomDogImage(breed: string): Promise<DogResponse | un
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const json = await response.json();
+    const json: { message: string; status: string } = await response.json();
+    // Es buena práctica tipar las respuesta, pare recordar que devuelven.
 
-    // TODO random breed
     return {
       id: Date.now() + Math.random(),
       breed,
@@ -35,16 +36,17 @@ export async function getRandomDogImage(breed: string): Promise<DogResponse | un
   return undefined;
 }
 
-export async function getDogBreedList() {
-  const url = 'https://dog.ceo/api/breeds/list/all';
+export async function getDogBreedList(): Promise<string[] | undefined> {
+  const url = "https://dog.ceo/api/breeds/list/all";
   try {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const json = await response.json();
-    return json.message;
+    const json: { message: AllBreedsResponse } = await response.json();
+
+    return Object.keys(json.message);
   } catch (error: any) {
     console.error(error.message);
   }

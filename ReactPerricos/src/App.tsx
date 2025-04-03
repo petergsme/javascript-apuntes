@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { getRandomDogImage } from './services/add-dog.service';
-import { getDogBreedList } from './services/add-dog.service';
-import './App.css';
+import { ChangeEvent, useEffect, useState } from "react";
+import { getRandomDogImage } from "./services/dogs.service";
+import { getDogBreedList } from "./services/dogs.service";
+import "./App.css";
 
 interface Dog {
   url: string;
@@ -15,16 +15,16 @@ interface Dog {
 function App() {
   const dog = [
     {
-      url: 'https://images.dog.ceo/breeds/hound-afghan/n02088094_11953.jpg',
-      breed: 'hound-afghan',
+      url: "https://images.dog.ceo/breeds/hound-afghan/n02088094_11953.jpg",
+      breed: "hound-afghan",
       likeCount: 0,
       dislikeCount: 0,
       isHidden: false,
       id: Date.now(),
     },
     {
-      url: 'https://images.dog.ceo/breeds/hound-afghan/n02088094_11953.jpg',
-      breed: 'hound-afghan',
+      url: "https://images.dog.ceo/breeds/hound-afghan/n02088094_11953.jpg",
+      breed: "hound-afghan",
       likeCount: 0,
       dislikeCount: 0,
       isHidden: false,
@@ -33,9 +33,11 @@ function App() {
   ];
 
   const [dogArray, setDogArray] = useState<Dog[]>(dog);
+  const [allBreeds, setAllBreeds] = useState<string[]>([]);
+  const [selectedBreed, setSelectedBreed] = useState("affenpinscher");
 
   const addDog = async () => {
-    const dog = await getRandomDogImage('');
+    const dog = await getRandomDogImage(selectedBreed);
 
     if (dog) {
       setDogArray([
@@ -50,6 +52,12 @@ function App() {
         },
       ]);
     }
+  };
+
+  const handleBreedChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    console.log(event.target.value);
+    // Este console log te sirve para ver si tu tipado es correcto. Si no se queja, lo es.
+    setSelectedBreed(event.target.value);
   };
 
   const updateDislike = (doggie: Dog) => {
@@ -68,19 +76,26 @@ function App() {
     );
   };
 
-  let dogBreedArray: string[];
-
-  const dogList = async () => {
-    const dogBreedList = await getDogBreedList();
-    dogBreedArray = Object.keys(dogBreedList);
+  const fetchDogList = async () => {
+    const theList = await getDogBreedList();
+    if (theList) {
+      setAllBreeds(theList);
+    }
   };
 
-  dogList();
+  useEffect(() => {
+    fetchDogList();
+  }, []);
+
+  // Lo que hay dentro del array si lo tienes vacio, el codigo solo se ejecuta al montarse, si pones cosas, se ejecutara el codigo si una de ellas cambia.
+
+  // Cuidado, llamar a un set hace que se vuelva a renderizar el componente.
 
   return (
     <>
-      <select name="" id="">
-        {dogBreedArray.map((breed) => {
+      <select onChange={handleBreedChange} value={selectedBreed}>
+        {/* Tiene que tener un value, si no se dice que no conecta. */}
+        {allBreeds.map((breed) => {
           return (
             <option key={breed} value={breed}>
               {breed}
