@@ -80,3 +80,20 @@ button {
     background-color: rgb(56, 169, 255);
   }
 }
+
+.add-mierdon {
+  &:hover {
+    color: rgb(248, 248, 248);
+    background-color: rgb(155, 9, 208);
+  }
+}
+
+select {
+  color: rgb(242, 242, 242);
+  background-color: rgb(71, 71, 71);
+  border: none;
+  transition: all 0.2s ease-in-out;
+  font-size: 16px;
+  padding: 9.6px 19.2px;
+  border-radius: 8px;
+}
