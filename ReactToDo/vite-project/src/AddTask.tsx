@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { Task } from "./task-models";
+import { useState } from 'react';
+import { Task } from './task-models';
 
 interface AddTaskProps {
-  tasks: Task<[]>;
+  tasksArray: Task[];
+  setTasksArray: (tasks: Task[]) => void;
+  // Funcion que acepta un listado de tareas y no retorna nada.
 }
 
-export const AddTask = () => {
-  const [inputText, setInputText] = useState("");
+export const AddTask = (props: AddTaskProps) => {
+  const [inputText, setInputText] = useState('');
+  const { tasksArray, setTasksArray } = props;
 
   const addTask = (text: string) =>
     setTasksArray([

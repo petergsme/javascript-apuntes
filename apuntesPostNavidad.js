@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date("2025-01-04T15:21:38.207Z");
-const date2 = new Date("2025-01-04T15:25:38.207Z");
+const date1 = new Date('2025-01-04T15:21:38.207Z');
+const date2 = new Date('2025-01-04T15:25:38.207Z');
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
-  { title: "La venganza de Xindasvinto", category: "history", read: true },
-  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
-  { title: "Arcanum ilimitado", category: "fantasy", read: false },
-  { title: "El señor de los anillos", category: "fantasy", read: true },
+  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
+  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
+  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
+  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
+  { title: 'El señor de los anillos', category: 'fantasy', read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector("#dog-list");
+  const dogList = document.querySelector('#dog-list');
 
-  const isAnyFilterSelected = document.querySelector(".filter-selected");
+  const isAnyFilterSelected = document.querySelector('.filter-selected');
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector("#like-filter");
+const likeFilterButton = document.querySelector('#like-filter');
 
-likeFilterButton.addEventListener("click", function () {
-  likeFilterButton.classList.toggle("filter-selected");
+likeFilterButton.addEventListener('click', function () {
+  likeFilterButton.classList.toggle('filter-selected');
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector("#dislike-filter");
+const dislikeFilter = document.querySelector('#dislike-filter');
 
-dislikeFilter.addEventListener("click", function () {
-  dislikeFilter.classList.toggle("filter-selected");
+dislikeFilter.addEventListener('click', function () {
+  dislikeFilter.classList.toggle('filter-selected');
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
-  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
+  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
+  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
 
-  document.querySelectorAll(".card").forEach((dogCard) => {
+  document.querySelectorAll('.card').forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = "";
+      dogCard.style.display = '';
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector(".like-count").innerText;
-    if (likeCount !== "" && isLikeFilterSelected) {
-      dogCard.style.display = "";
+    const likeCount = dogCard.querySelector('.like-count').innerText;
+    if (likeCount !== '' && isLikeFilterSelected) {
+      dogCard.style.display = '';
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
-    if (dislikeCount !== "" && isDislikeSelected) {
-      dogCard.style.display = "";
+    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
+    if (dislikeCount !== '' && isDislikeSelected) {
+      dogCard.style.display = '';
       return;
     }
 
-    dogCard.style.display = "none";
+    dogCard.style.display = 'none';
   });
 }
 
@@ -382,7 +382,7 @@ Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta 
 */
 
 async function getDogBreedList() {
-  const url = "https://dog.ceo/api/breeds/list/all";
+  const url = 'https://dog.ceo/api/breeds/list/all';
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -745,6 +745,8 @@ Es importante pensar antes de escribir código.
 
 Para los await guardarlos en variables, asi seras capaz de saber facilmente donde se rompe tu codigo si sucede.
 
+----------------------------------------------------------------------
+
 useEffect sirve para ejecutar algo solo cuando el componente se monta.
 No puede ser asíncrono en sí mismo, pero puede contener codigo asincrono que se ejecute en su interior.
 si introduces un return en su cuerpo con una funcion flecha el codigo que devuelve se ejecutara en la destruccion del componente.
@@ -763,9 +765,36 @@ Pues cuando el nuevo valor dependa del viejo, cualquier otro caso no hace falta 
 
 CUIDADO, si una variable de estado esta en un padre actualizará todos los hijos al cambiar. Hay veces que conviene crear un componente diferente con una variable de estado e incluirlo en el primero, para evitar actualizar todos cada vez que cambia.
 
+-------------------------------------------
+
 Empieza por un único componente.
-Luego ya lo puedes desglosar con sus useStates si quieres. es complejo.
+Luego ya lo puedes desglosar con sus useStates si quieres. es complejo y dependerá de simplifcar codigo o hacerlo mas eficiente.
 
 Cuanto mas independientes sean los componentes entre sí cuando los desgloses, mucho mejor.
+Esto tiene que ver con el componente addTask, que ahora mismo depende de saber que debe recibir un metodo que esta en otro sitio.
+es mejor tener ese otro metodo en otro sitio de manera independiente y simplificar el componente para que no dependa de ello.
+
+-------------------------------------------
+
+¿POR QUÉ CREAR COMPONENTES?
+
+-para mover usestates a otro sitio para no renderizar inutilmente o de mas un componente.
+-si yo puedo mover un monton de logica a otro componente, mi codigo va a ser mas facil de entender. Tendré codigo mas sencillo.
+
+-------------------------------------------
+
+Para estudiar REACT tienes de:
+
+-ReactProject>app.jsx - arrays.
+
+-ReactPerricos:
+  -app.tsx - general.
+  -dogs.ts y dogs.service.ts - apis y tipos.
+  -mierdon.tsx - componente con mas cosas.
+
+-ReactToDO:
+  -app.tsx
+  -addtask.tsx - componentizando algo complejo
+  -task-models.ts - tipado
 
 */

@@ -1,12 +1,13 @@
-import { useState } from "react";
-import "./App.css";
-import { AddTask } from "./AddTask";
-import { Task } from "./task-models";
+import { useState } from 'react';
+import './App.css';
+import { AddTask } from './AddTask';
+import { Task } from './task-models';
 
 function App() {
   const [tasksArray, setTasksArray] = useState<Task[]>([]);
   // Esta es la manera de especificar un tipado en un useState.
   const [isOnlyPending, setIsOnlyPending] = useState(false);
+  const [isOnlyCompleted, setIsOnlyCompleted] = useState(false);
 
   const handleDelete = (task: Task) => {
     setTasksArray(tasksArray.filter((tarea) => tarea.id !== task.id));
@@ -20,16 +21,22 @@ function App() {
 
   return (
     <>
-      <AddTask />
+      <AddTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
       <div>
-        <button className={isOnlyPending ? "pending" : ""} onClick={() => setIsOnlyPending(!isOnlyPending)}>
+        <button className={isOnlyPending ? 'pending' : ''} onClick={() => setIsOnlyPending(!isOnlyPending)}>
           Show Pending
         </button>
-        <button>Show Completed</button>
+        <button className={isOnlyCompleted ? 'pending' : ''} onClick={() => setIsOnlyCompleted(!isOnlyCompleted)}>
+          Show Completed
+        </button>
       </div>
       <ul className="task-list">
         {tasksArray.map((task) => {
-          if (isOnlyPending && task.isCompleted) {
+          if (isOnlyPending && task.isCompleted && !isOnlyCompleted) {
+            return;
+          }
+
+          if (isOnlyCompleted && !task.isCompleted && !isOnlyPending) {
             return;
           }
 
