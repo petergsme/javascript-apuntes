@@ -55,8 +55,8 @@ new Date(1736003991648);
 También ayuda a operar con fechas:
 */
 
-const date1 = new Date('2025-01-04T15:21:38.207Z');
-const date2 = new Date('2025-01-04T15:25:38.207Z');
+const date1 = new Date("2025-01-04T15:21:38.207Z");
+const date2 = new Date("2025-01-04T15:25:38.207Z");
 
 const msBetweenDates = date2.getTime() - date1.getTime();
 
@@ -114,11 +114,11 @@ console.log(`En total, te has leído ${totalBooks} libros`);
 
 //CREACIÓN DINÁMICA del objeto booksReadByCategory
 const books = [
-  { title: 'El ataque de los ornitorrincos en celo', category: 'horror', read: true },
-  { title: 'La venganza de Xindasvinto', category: 'history', read: true },
-  { title: 'Ruperto y los caballeros radiantes', category: 'fantasy', read: true },
-  { title: 'Arcanum ilimitado', category: 'fantasy', read: false },
-  { title: 'El señor de los anillos', category: 'fantasy', read: true },
+  { title: "El ataque de los ornitorrincos en celo", category: "horror", read: true },
+  { title: "La venganza de Xindasvinto", category: "history", read: true },
+  { title: "Ruperto y los caballeros radiantes", category: "fantasy", read: true },
+  { title: "Arcanum ilimitado", category: "fantasy", read: false },
+  { title: "El señor de los anillos", category: "fantasy", read: true },
 ];
 
 const booksReadByCategory = {};
@@ -212,12 +212,12 @@ CONSEJOS
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
 
-  const dogList = document.querySelector('#dog-list');
+  const dogList = document.querySelector("#dog-list");
 
-  const isAnyFilterSelected = document.querySelector('.filter-selected');
+  const isAnyFilterSelected = document.querySelector(".filter-selected");
   // Si hay algún filtro seleccionado los perritos se añaden con display none.
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
+  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ""}>
   <img src="${perricoImg}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
@@ -235,46 +235,46 @@ const addPerrico = async (addToStart) => {
 
 // También hay funciones que permiten implementar funciones más pequeñas para ahorrárte la creación de 3 pequeñas funciones distintas. La función de abajo pudo haber creado diferentes funciones para cada botón de filtrado. Pero es mejor que cada vez que se toque un boton de filtrado ambos llamen a la MISMA función y sea ella quien determine cuál ha sido accionado y qué debe devolver:
 
-const likeFilterButton = document.querySelector('#like-filter');
+const likeFilterButton = document.querySelector("#like-filter");
 
-likeFilterButton.addEventListener('click', function () {
-  likeFilterButton.classList.toggle('filter-selected');
+likeFilterButton.addEventListener("click", function () {
+  likeFilterButton.classList.toggle("filter-selected");
   filterPerricos();
 });
 
-const dislikeFilter = document.querySelector('#dislike-filter');
+const dislikeFilter = document.querySelector("#dislike-filter");
 
-dislikeFilter.addEventListener('click', function () {
-  dislikeFilter.classList.toggle('filter-selected');
+dislikeFilter.addEventListener("click", function () {
+  dislikeFilter.classList.toggle("filter-selected");
   filterPerricos();
 });
 
 function filterPerricos() {
-  const isLikeFilterSelected = likeFilterButton.classList.contains('filter-selected');
-  const isDislikeSelected = dislikeFilter.classList.contains('filter-selected');
+  const isLikeFilterSelected = likeFilterButton.classList.contains("filter-selected");
+  const isDislikeSelected = dislikeFilter.classList.contains("filter-selected");
 
-  document.querySelectorAll('.card').forEach((dogCard) => {
+  document.querySelectorAll(".card").forEach((dogCard) => {
     // si no hay ningún filtro aplicado, lo muestra
     if (!isLikeFilterSelected && !isDislikeSelected) {
-      dogCard.style.display = '';
+      dogCard.style.display = "";
       return;
     }
 
     // si preciosismo aplicado y hay preciosisimo lo muestra
-    const likeCount = dogCard.querySelector('.like-count').innerText;
-    if (likeCount !== '' && isLikeFilterSelected) {
-      dogCard.style.display = '';
+    const likeCount = dogCard.querySelector(".like-count").innerText;
+    if (likeCount !== "" && isLikeFilterSelected) {
+      dogCard.style.display = "";
       return;
     }
 
     // si feísimo aplicado y hay feísimo lo muestra
-    const dislikeCount = dogCard.querySelector('.dislike-count').innerText;
-    if (dislikeCount !== '' && isDislikeSelected) {
-      dogCard.style.display = '';
+    const dislikeCount = dogCard.querySelector(".dislike-count").innerText;
+    if (dislikeCount !== "" && isDislikeSelected) {
+      dogCard.style.display = "";
       return;
     }
 
-    dogCard.style.display = 'none';
+    dogCard.style.display = "none";
   });
 }
 
@@ -382,7 +382,7 @@ Planteemos otro supuesto. En caso de que el servidor sí devuelva una respuesta 
 */
 
 async function getDogBreedList() {
-  const url = 'https://dog.ceo/api/breeds/list/all';
+  const url = "https://dog.ceo/api/breeds/list/all";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -751,6 +751,8 @@ useEffect sirve para ejecutar algo solo cuando el componente se monta.
 No puede ser asíncrono en sí mismo, pero puede contener codigo asincrono que se ejecute en su interior.
 si introduces un return en su cuerpo con una funcion flecha el codigo que devuelve se ejecutara en la destruccion del componente.
 
+CON LOS useEffect SIEMPRE PON CONSOLE.LOG PARA VER CUANDO ENTRA EL CODIGO Y CUANDO SE VA.
+
 .then es una alternativa a async y await.
 
 onClick={() => toggleCompletedTask(task)}
@@ -796,5 +798,59 @@ Para estudiar REACT tienes de:
   -app.tsx
   -addtask.tsx - componentizando algo complejo
   -task-models.ts - tipado
+
+--------------------------------------------
+
+MEMOIZACION Y USEMEMO.
+
+Se trata de un hook de REACT. Solo tienes que saber cuando toca usar un hook de react y por qué.
+Sirve para optimizar cálculos y operaciones complejas. (como con arrays de longitudes variables.)
+
+Almacena en caché(memoria interna) el resultado de una función, para que si se vuelve a llamar con los mismos parametros de entrada, no la vuelva a ejecutar y solo devuelva el resultado calculado previamente.
+
+Lo usaremos cuando trabajemos con arrays y cuando esa operacion sea menos pesada que la MEMORIZACION.
+
+const valor = useMemo(calcularvalor, [dependencias])
+-su primer parametro es una funcion QUE DEBE DEVOLVER UN VALOR, esta función depende de las dependencias que le pasas.
+-un array de dependencias, que funciona como el del useEffect, se recalcula cuando sus dependencias cambian.
+
+function TodoList({ todos, tab, theme }) {
+  const visibleTodos = useMemo(() => filterTodos(todos, tab), [todos, tab]);
+  ...
+
+*Debes guardar el valor de useMemo en una variable para poder utilizarlo. Si no vas a usar ese valor en otro lado, no debes usar un useMemo si no un useEffect. Y si tienes un useffect pero necesitas usar el valor en algun lado entonces buscas un useMemo.
+
+*Si tu codigo no devuelve nada, useEffect. Si devuelve algo y depende de valores calculados entonces useMemo.
+*useCallback es como useMemo pero ÚNICAMENTE para funciones. (Crea una función memoizada).
+-----------------------------------------------
+
+DEBER ACTUALIZA LOS FILTROS DE LOS PERROS CON EL useMemo.
+
+-----------------------------------------------
+
+Sobre usar componentes open source, ¿cómo saber si es buena idea hacerlo?
+
+-Son personalizables
+-Han sido actualizados recientemente en gitHub (<1 año)
+-Tiene mas de 1k estrellas en gitHub.
+-Hay pocos issues abiertos (peticiones de personalidad y bugs) o se actualizan con relativa frecuencia.
+-Tiene muchos contributors.
+-Descargas semanales en NPM.
+
+*Swiper js recomendada.
+
+----------------------------------------------
+
+React router.
+
+Es una librería para crear varias páginas en mi proyecto de React.
+Para navegar entre páginas tienes que usar un componente específico de router, Navlink o Link.
+
+Para el menú principal tienes que usar index routes.
+
+----------------------------------------------
+
+
+
 
 */
