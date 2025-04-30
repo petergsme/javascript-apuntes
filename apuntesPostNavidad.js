@@ -850,7 +850,69 @@ Para el menú principal tienes que usar index routes.
 
 ----------------------------------------------
 
+APUNTES CLASE 30/04
+
+Git Graph te informa de las ramas del repositorio, el momento en que se crearon, los commits realizados.
+La idea es sacar ramas, añadir cosas y luego realizar una petición de push a la rama principal.
+
+La otra extensión recomendada es GitLens (antes tenía una mejor experienia de usuario). Tiene una ventana de ramas, otra de commits y otra que permite borrar ramas de la nube tras hacer merge.
+
+*Borra las ramas despues de hacer los merge.
+*Añade colaboradores a tu repositorio para montar tu proyecto.
+*En vez de hacer muchos commits pequeños para una unica funcion, es recomendable que todos esos commits sean unidos en uno antes de pushear a la rama principal.
+
+La manera de trabajar es tener dos ramas. 
+DEVELOP
+MAIN
+
+Vas trabajando en develop hasta que quieras hacer una release y entonces brancheas mergeas y borras branch.
+Puedes hacer click abajo a la izquierda para crear nuevos branches.
+
+usa el comando git flow init y repsonde debidamente sus preguntas.
+cuando quieras trabajar en algo: git flow feature start my-feature. Crea una rama a partir de develop.
+
+No es mala idea pasarte a hacer commits y tal con VSCode.
+
+Si has hecho un commit pero quieres tirar para atras te tienes que ir al anterior commit de esa rama y reset current branch to this commit y tienes un par de opciones sobre si perder el codigo que has escrito o solo cambiar el nombre del commit o hacer mas adelante el commit.
+
+Tras eso en github en web puedes hacer una pull request. La pull request es una peticion de mergear tu linea con la principal o la de develop.
+
+Puedes hacer reviews de una pull para que la gente cambie cosas.
+En las reviews intenta hacer de manera suave las criticas.
+
+Tras mergear tu branch haz delete local & remote de la feature que creaste.
+
+Si quieres ir atras, en VSCODE, click derecho revert en la que has mergeado. Y luego ya commitear y pushear ese revert.
 
 
+Vale, tu idea es que tus ramas de develop de funciones vayan por delante de tu version principal, si se quedan por detras tienes que hacer click derecho y pedirle hacer un rebase, si hay conflictos tienes que ir a apañarlos.
+
+RECUERDA REVISAR
+USEMEMO
+USESTATE
+USEFFECT
+USECONTEXT
+
+existen tambien customhooks.
+
+Puedes usar git push force with lease para algo de resolver conflictos y poner al dia la ramas.
+
+El asunto es que cuando te pongas a trabajar en el dia mires si tu rama develop esta por delante y si lo esta mergea con tu rama de features para evitar errores.
+
+Para clonar de git puedes poner git clone + la url del proyecto a clonar en tu terminal. (si pones un punto en algun lado se instala en la carpeta actual).
+
+TIPS DE ORGANIZACION PARA EL GRUPO DE LAS CARTAS.
+
+Siempre hay carpeta de components.
+Siempre hay carpeta de páginas.
+(Cada pagina tiene una carpeta y cada componente tambien.)
+
+nombres carpetas con guion y en minusculas.
+
+Si un componente solo se usa en una página se pone en la carpeta de la página y no en components.
+
+Las imagenes igual que los componentes pueden llegar a tener su carpeta assets.esta carpeta deberá estar donde se usen esas imagenes.
+
+Usa rename symbol para cambiar nombres, luego nombres de ficheros y actualiza imports.
 
 */
