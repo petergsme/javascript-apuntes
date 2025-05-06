@@ -916,3 +916,148 @@ Las imagenes igual que los componentes pueden llegar a tener su carpeta assets.e
 Usa rename symbol para cambiar nombres, luego nombres de ficheros y actualiza imports.
 
 */
+
+/*
+
+USECONTEXT
+
+Para comunicar dos componentes, como por ejemplo hacer un usestate que afecte a ambos. si esos dos componentes estan paralelos en el arbol, es decir son hermanos tienes que meter la información en el padre.
+
+La idea despues es ir pasando las propiedades, creandolas y pasandolas. de arriba a abajo y utilizando un usestate donde si tenga que modificarse.
+
+usecontext. contexto como componente especial. donde ponga ese usecontext, todos los descendientes van a poder acceder a esa informacion y modificarla.
+
+La unica condicion que hay con los contextos:
+-
+-
+-
+
+creas un componente de contexto MiComponenteContext.
+
+Copiaos un contexto y empezad a cambiar cosas.
+
+Primero se define el objeto con la información del contexto.
+interface MyTypeContextState {...}
+
+creamos un componente que se llame igual que el fichero y lo exportamos. Le damos un createcontext con unos valores por defecto.
+export const TasksContext = createcontext<MyTypeContext>({})
+
+
+Hasta ahora hemos creado el contexto ahora lo definimos:
+interface TaskContextProviderProps {
+    children: React.ReactNode.
+}
+Esta interfaz tiene minimo una propiedad, children para poderle pasar como hijo segun dice josmi los componentes del arbol que necesiten hacer uso de el.
+
+Finalmente hay una cosa mas.
+export const TaskContextProvider ... (miralo)
+
+Ahora me voy a componente quiero convertir en contexto. Y me llevo de allí lo que necesite usar a traves de varios componentes.
+
+Cuando quieras que un componente acceda a algo de eso, tienes que darle el contexto a su padre.
+Puedes ponerlo como un elemento mas que envuelva el return de un componente.O hacerlocon su padre.
+Y en todos los hijos usar un hook de react que permite usar todo lo que hay y pasas como parametro
+
+Muchas veces para hacer codigo mas simple es mejor combinar css y react (ejemplo de flex de iconos de formulario.)
+
+Entendiendo React Context
+
+Definición del contexto: Primero se define una interfaz con los tipos de datos que contendrá el contexto y luego se crea el contexto con un valor inicial.
+tsxinterface TasksContextState {
+  tasks: Task[];
+  setTasks: (tasks: Task[]) => void;
+}
+
+export const TasksContext = createContext<TasksContextState>({
+  tasks: [],
+  setTasks: () => {}
+});
+
+Creación del Provider: Se crea un componente que proporcionará el contexto a sus hijos, generalmente usando useState para manejar los datos.
+tsxexport const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
+  const [tasks, setTasks] = useState<Task[]>([
+    { text: 'Tarea 1', isCompleted: false, id: Math.random() },
+    { text: 'Tarea 2', isCompleted: true, id: Math.random() }
+  ]);
+  
+  return <TasksContext.Provider value={{ tasks, setTasks }}>{children}</TasksContext.Provider>;
+};
+
+Envolver la aplicación: En el componente principal (App.tsx o similar), se envuelve la aplicación con el Provider.
+tsxfunction App() {
+  return (
+    <TasksContextProvider>
+      <MainComponent />
+    </TasksContextProvider>
+  );
+}
+
+Consumir el contexto en componentes: Los componentes hijos pueden acceder a los datos usando useContext.
+
+Uso en un componente
+Para usar el contexto en cualquier componente hijo, se hace lo siguiente:
+tsximport React, { useContext } from 'react';
+import { TasksContext } from './path/to/context';
+
+const TaskList = () => {
+  // Acceder al contexto
+  const { tasks, setTasks } = useContext(TasksContext);
+  
+  // Función para marcar una tarea como completada
+  const toggleTaskCompletion = (id: number) => {
+    setTasks(
+      tasks.map(task => 
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+      )
+    );
+  };
+  
+  // Función para añadir una nueva tarea
+  const addTask = (text: string) => {
+    setTasks([...tasks, { text, isCompleted: false, id: Math.random() }]);
+  };
+  
+  return (
+    <div>
+      <h2>Lista de Tareas</h2>
+      <ul>
+        {tasks.map(task => (
+          <li 
+            key={task.id}
+            style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}
+            onClick={() => toggleTaskCompletion(task.id)}
+          >
+            {task.text}
+          </li>
+        ))}
+      </ul>
+      <button onClick={() => addTask('Nueva tarea')}>Añadir tarea</button>
+    </div>
+  );
+};
+
+export default TaskList;
+Ventajas del Context API
+
+Evitar prop drilling: No necesitas pasar props a través de múltiples niveles de componentes
+Estado compartido: Múltiples componentes pueden acceder y modificar el mismo estado
+Separación de responsabilidades: Mantienes la lógica de estado separada de los componentes de presentación
+
+El Context API es ideal para datos que necesitan ser accesibles por muchos componentes en diferentes niveles de tu árbol de componentes, como temas, autenticación de usuario o, como en este caso, una lista de tareas.
+
+*/
+
+/*
+ICONOS EN REACT.
+
+Hay un paquete "React icons" que incluye las librerias mas relevantes.
+
+Si quieres meter tus propios iconos tendrás que crear un componente para cada uno. Copias el SVG directamente y lo metes en el return del componente. Pero hay una manera mejor de hacerlo.
+
+*Recuerda height y width deberas quitarselos y pasar un parametro de tamaño si quieres. También deberías tener el fill en currentcolor.
+*Otra opcion es crear una tipografía con un sprite de iconos y elegir el que vas a usar.
+*Una opción más es utilizando el plugin de Vite "svgr" que permite importar svgs como componentes de React.
+(npm install...)
+(hay muchos pasos josmi pasara el articulo)
+
+*/
