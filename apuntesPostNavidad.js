@@ -1132,6 +1132,7 @@ React necesita un servidor externo ya que es client-side, Josmi recomienda apren
 Internacionalización de una web --> adaptar/traducir/localizar a otros idiomas. i18n se usa para referirse a la internacionalización.
 Utilizaremos un paquete creado para Next pero que no lo requiere: react-i18next.
 Aquí el vídeo de la clase del 13/05 o la propia documentación pueden guiarte.
+Otros conceptos importantes son pluralization(conteos y plurales) e interpolation(variables en textos)
 
 
 
