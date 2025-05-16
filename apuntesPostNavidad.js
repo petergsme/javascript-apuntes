@@ -1134,7 +1134,32 @@ Utilizaremos un paquete creado para Next pero que no lo requiere: react-i18next.
 Aquí el vídeo de la clase del 13/05 o la propia documentación pueden guiarte.
 Otros conceptos importantes son pluralization(conteos y plurales) e interpolation(variables en textos)
 
+*/
 
+/*
+CLASE 16-05-23
 
+Hoy USEREF y USEREDUCER.
 
+*Josmi dice si quereis hacer pruebas para entrevistas hablad con el y pedidlo.
+
+useRef - sirve para guardar "teóricamente" valores que yo pueda actualizar pero que al actualizarlo NO se actualice el componente. Son casos bastante concretos. La cosa es que es información que se mantiene entre renderizados pero no los fuerza.
+
+Se puede usar tambien para saber cual es el objeto del DOM que renderiza un componente, este sí es común. Puede interesarnos conocer el DOM que se ha generado. La unica manera de trabajar con el DOM en react es a través de useRef.
+
+Todos los useRef devuelven un objeto con la propiedad "current" cuyo valor es lo que modificas. Cuando lo uses para algo del Dom inicializalo a "null" pero tipalo con el tipo de dato que vayas a tocar: "useRef<HTMLDivElement>(null)".
+
+Accedemos a current con: AlgoRef.current.aquiyaloquequierastocar. ...
+
+*Recuerda si intentas acceder a AlgoRef y cambiar algo te dirá que como PUEDE ser null algo va mal. La manera de solucionarlo es meter ese cambio dentro de un if que sea algo como: si AlgoRef.current es null entonces return, si no entonces ejecuta esta instruccion.
+
+OJO para que todo esto funcione un elemento de html tiene que tener la propiedad ref={AlgoRef}
+
+Usaremos las referencias para saber posicionamientos, eventos...
+
+Tambien puedes usar useRef para comprobar si un componente se ha montado. ütil cuando un componente depende de algo como un api.
+
+Para cualquier cosa donde necesites la altura/anchura de un componente puede interesarte usarlo.
+
+Cuidado metiendole event listeners al window, tienes que limpiarlos EH.
 */
