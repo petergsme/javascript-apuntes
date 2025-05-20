@@ -1153,7 +1153,7 @@ Accedemos a current con: AlgoRef.current.aquiyaloquequierastocar. ...
 
 *Recuerda si intentas acceder a AlgoRef y cambiar algo te dirá que como PUEDE ser null algo va mal. La manera de solucionarlo es meter ese cambio dentro de un if que sea algo como: si AlgoRef.current es null entonces return, si no entonces ejecuta esta instruccion.
 
-OJO para que todo esto funcione un elemento de html tiene que tener la propiedad ref={AlgoRef}
+OJO para que todo esto funcione un elemento de html tiene que tener la propiedad ref={AlgoRef}. Así accedemos al elemento en el DOM.
 
 Usaremos las referencias para saber posicionamientos, eventos...
 
@@ -1162,4 +1162,43 @@ Tambien puedes usar useRef para comprobar si un componente se ha montado. ütil 
 Para cualquier cosa donde necesites la altura/anchura de un componente puede interesarte usarlo.
 
 Cuidado metiendole event listeners al window, tienes que limpiarlos EH.
+
+
+
+CLASE 20-05-23
+
+Continuamos con el useREF, no está muy claro.
+
+Si vais a hacer un listener en un useEffect. Teneis que hacer la funcion del listener primero y despues:
+document.addEventlistener('click', handleclick); y luego un return con removeEventListener("click", handleclick). Tienes que limpiar el listener siempre.
+
+Todos los listeners tienen siempre un parametro que es la informacion del evento "event". Un tipado es event: MouseEvent.
+
+Los elementos del DOM tienen una función "contains(event.target)" (ese parametro es de ejemplo).
+Al final lo hemos resuelto cambiando la comprobacion de si el click se ha realizado en el lugar correcto(en el boton). Si en el ref no encuentra el event target que son los botones del modal, entonces es que el click no sucede ahi y debe cerrar el modal.
+
+
+PORTAL en REACT.
+
+Sirve pricipalmente para sacar las cosas del orden lógico que hay y ponerlas en el body.
+
+Estamos intentando que el modal,ahora dentro de un scroll vertical no quede cubierto por los limites del scroll y se monte sobre todo lo demas. Para esto usamos algo llamado portal. Tambien hemos visto que con $0.offsetTop podemos conocer la distancia de elemento a su lo que tiene encima. (si hay pasos intermedios habria muchos offset que sumar.)
+
+{createportal}
+
+
+Estamos viendo dudas del proyecto PawPlay sobre usecontext.
+Josmi recomienda dar fallback a los usecontext.
+No me he enterado del resto.
+
+Ahora vamos a ver algunas utilidades de typescript que no hemos visto el resto del año.
+
+1.Extender interfaces.
+Si tengo interface A, con propiedades 1,2,3 e interface B con propiedades 1,2,3 y algo mas, puedo dejar solo las nuevas y hacer:
+interface B extends A. (Con type es un pelin diferente).
+
+2. Pick<Tipo, "propiedad" | "propiedad">.
+con este tipado pillas algunas propiedades sueltas de un tipado que señalas separadas por |.
+
+3. Omit (funciona como pick pero al reves) .También existe el pick inverso, que tenga todas menos algunas propiedades.
 */
