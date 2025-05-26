@@ -1245,3 +1245,83 @@ Pedir a Josmi.
 -Crear componentes especificos toda una clase.
 -Practicar entrevistas(esto hay que pedirselo a josmi).
 */
+
+/*
+CLASE 26-05
+
+MÓDULOS CSS.
+
+Si tengo distinto la misma clase con diferentes propiedades en hojas de css diferentes, al usar esa clase en un componente podría chafarse a sí misma. En principio aquí el orden de carga es, el componente padre (la página es el primero en cargar sus estilos, y luego se cargan las hojas de estilos de sus componentes hijos, asi que esas sobrescribirían.) También tiene mucho que ver el orden de importación de los componentes.
+
+Por ejemplo si comp.A se importa antes que B, pero B tiene una clase que sobreescribe algo de A, entonces al ser importado después de A, hará eso mismo. Lo mismo pasa al revés, cuando A sea importado despues que B sobreescribirá el css de B si sus clases coinciden pero tienen propiedades diferentes.
+
+Esto se resuelve con modulos CSS, y sirve para que el css creado para un componente solo afecte a ESE modulo CSS.
+
+"componente.module.css"
+(dentro escribes css normal, lo importante es acceder a ello en ClassName:)
+
+Para importarlo en un componente importas un theme de ese archivo css.
+Luego pasas como parámetro la clase así: ${theme.laclasequesea}.
+
+*Recuerda que en javascript no puedes tener guiones en una variable.
+*Con modulos CSS es menos util usar BEM.
+
+Para usarlo con BEM ${theme.['laclasequesea--brazo']}.
+Solo así, usando corchetes puedes pasarlo como string.
+
+OJO si tienes una propiedad size: sm | md | lg. Y tienes que crear clases CSS correspondientes en un modulo haz componente--sm, o md o lg. Así te evitas mapear los valores de la propiedad a otro nombre de clase.
+
+Además en ese caso particular como es raro acceder a eso. Harías ${theme.[`laclasequesea${size}`]}
+Aquí usas el corchete para usar acceso dinamico y las comillas invertidas para anidar la variable.
+
+*Cuidado al usar el ampersand para asignaciones que terminen siendo string, si tu propiedad a comprobar es falsa pondrá "false" en el string. Así que mejor usa un ternario.
+
+Si se vuelve lioso tener tantos condicionales en el className de tu componente hay un librería para ayudarte. Usaremos el paquete:
+"classnames"
+
+Se usa así:
+
+import classNames from 'classnames/bind'; -- importamos la utilidad (con BIND si usas themes)
+import theme from './avatar.module.css'; -- importamos el theme.
+
+const cx = classNames.bind(theme); -- creas esta variable importante.
+
+interface AvatarProps {
+  imgUrl: string;
+  size?: 'sm' | 'md' | 'lg';
+  rounded?: boolean;
+  border?: boolean;
+}
+
+export const Avatar = (props: AvatarProps) => {
+  const { imgUrl, size = 'md', rounded, border } = props;
+
+----ojo, eso classname que hay en el div es lo que va dentro de classname.
+
+  return (
+    <div
+      className={cx({
+        avatar: true,
+        [`avatar--${size}`]: true,
+        'avatar--rounded': rounded,
+        'avatar--border': border
+      })}
+
+----el funcionamiento de ese classname es el siguiente:
+----1. pones cx({}) y dentro del objeto las propiedades implicarán las clases.
+----2. pones el nombre de la clase como propiedad, si es complejo y utiliza caracteres indebidos lo pones entre comillas.
+----3. les das condiciones, si pones true esa clase estará siempre, en los que pones "rounded" o "border" dependerá de esas variables/ parametros del componente para poner o no la clase.
+
+    >
+      // className={`${theme.avatar} ${theme[`avatar--${size}`]} ${rounded ? theme['avatar--rounded'] : ''} ${
+      //   border ? theme['avatar--border'] : ''
+      // }`}
+      >
+        <img src={imgUrl} />
+      </div>
+    );
+};
+
+*Si no usas modulos css es mas sencillo solo buscalo o pregunta a claude.
+*Es mejor usar módulos de CSS en general para evitar problemas.
+*/
